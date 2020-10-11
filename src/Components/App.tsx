@@ -9,7 +9,7 @@ const App = () => {
     const [fetching, setFetching] = useState<boolean>(false);
 
     useEffect(() => {
-        if(!projects) {
+        if (!projects) {
             setFetching(true);
             retrieveProjects().then((result: Project[]) => {
                 setProjects(result);
