@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import '../Styles/App.css';
-import { Project } from "api-builder-types";
-import { retrieveProjects } from "../Helper/Retriever";
-import { ProjectView } from "./ProjectView";
+import { Project } from 'api-builder-types';
+import { retrieveProjects } from '../Helper/Retriever';
+import ProjectView from './ProjectView';
 
 const App = () => {
     const [projects, setProjects] = useState<Project[]>();
@@ -22,7 +22,7 @@ const App = () => {
         <div className="App">
             <header className="App-header">
                 {fetching && <div>Loading...</div>}
-                {projects && projects.map(project => (
+                {projects && projects.map((project) => (
                     <div key={project.Identifier.toString()}>
                         <ProjectView
                             Identifier={project.Identifier}
@@ -34,7 +34,7 @@ const App = () => {
                 ))}
             </header>
         </div>
-      );
+    );
 };
 
 export default App;

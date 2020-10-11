@@ -1,15 +1,27 @@
 import React from 'react';
-import { Project } from "api-builder-types";
+import { Project } from 'api-builder-types';
 
 interface ProjectViewProps extends Project {}
 
-export const ProjectView: React.FC<ProjectViewProps> = ({Identifier, Name, Description, Type}: ProjectViewProps) => {
-
-    return (
+const ProjectView: React.FC<ProjectViewProps> = ({
+    Name,
+    Description,
+    Type
+}: ProjectViewProps) => (
+    <div>
         <div>
-            <div>Name: {Name}</div>
-            <div>Type: {Type}</div>
-            <div>Description: {Description}</div>
+            Name:
+            {Name}
         </div>
-    )
-};
+        <div>
+            Type:
+            {Type}
+        </div>
+        <div>
+            Description:
+            {Description}
+        </div>
+    </div>
+);
+
+export default ProjectView;
