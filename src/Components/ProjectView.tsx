@@ -6,7 +6,7 @@ interface ProjectViewProps extends Project {}
 const ProjectView: React.FC<ProjectViewProps> = ({
     Name,
     Description,
-    Type
+    Type,
 }: ProjectViewProps) => (
     <div>
         <div>
