@@ -39,11 +39,10 @@
   },
   "proxy": "http://localhost:4000",
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^4.4.0",
-    "eslint-config-airbnb-typescript": "^10.0.2",
+    "eslint-config-airbnb-typescript": "^7.2.1",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-jsx-a11y": "^6.3.1",
     "eslint-plugin-react": "^7.21.4",
-    "eslint-plugin-react-hooks": "^4.1.2"
+    "eslint-plugin-react-hooks": "^2.5.0"
   }
 }
