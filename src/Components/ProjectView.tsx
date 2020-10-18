@@ -8,20 +8,22 @@ const ProjectView: React.FC<ProjectViewProps> = ({
     Description,
     Type,
 }: ProjectViewProps) => (
-    <div>
+    <>
         <div>
-            Name:
-            {Name}
+            <div>
+                Name:
+                {Name}
+            </div>
+            <div>
+                Type:
+                {Type}
+            </div>
+            <div>
+                Description:
+                {Description}
+            </div>
         </div>
-        <div>
-            Type:
-            {Type}
-        </div>
-        <div>
-            Description:
-            {Description}
-        </div>
-    </div>
+    </>
 );
 
 export default ProjectView;
