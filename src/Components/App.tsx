@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import '../Styles/App.css';
+import '../Styles/App.scss';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { Project } from 'api-builder-types';
 import { retrieveProjects } from '../Helper/Retriever';
 import ProjectView from './ProjectView';
