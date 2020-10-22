@@ -19,12 +19,12 @@ const ProjectView: React.FC<ProjectViewProps> = ({
 
     return (
         <>
-            <Container>
-                <Row>
+            <Container className="text-left mb-3">
+                <Row className="text-left">
                     <Col sm={8}>
                         {Name}
                     </Col>
-                    <Col sm={4}>
+                    <Col sm={4} className="text-right">
                         <Button
                             onClick={() => setOpen(!open)}
                             aria-controls="example-collapse-text"
@@ -34,19 +34,21 @@ const ProjectView: React.FC<ProjectViewProps> = ({
                         </Button>
                     </Col>
                 </Row>
-            </Container>
-            <Collapse in={open}>
-                <div>
-                    <div id="example-collapse-text">
-                        Type:
-                        {` ${Type}`}
-                    </div>
+                <Collapse in={open} className="text-left">
                     <div>
-                        Description:
-                        {` ${Description}`}
+                        <div id="example-collapse-text" className="mb-2 mt-2">
+                            Type:
+                            <br />
+                            {` ${Type}`}
+                        </div>
+                        <div>
+                            Description:
+                            <br />
+                            {` ${Description}`}
+                        </div>
                     </div>
-                </div>
-            </Collapse>
+                </Collapse>
+            </Container>
         </>
     );
 };
