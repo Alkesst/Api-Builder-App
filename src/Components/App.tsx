@@ -24,14 +24,13 @@ const App = () => {
             <header className="App-header">
                 {fetching && <div>Loading...</div>}
                 {projects && projects.map((project) => (
-                    <div key={project.Identifier.toString()}>
-                        <ProjectView
-                            Identifier={project.Identifier}
-                            Description={project.Description}
-                            Name={project.Name}
-                            Type={project.Type}
-                        />
-                    </div>
+                    <ProjectView
+                        key={project.Identifier.toString()}
+                        Identifier={project.Identifier}
+                        Description={project.Description}
+                        Name={project.Name}
+                        Type={project.Type}
+                    />
                 ))}
             </header>
         </div>
