@@ -12,3 +12,9 @@ export const basicRetrieve = async<T> (route: string, config?: RequestInit): Pro
 };
 
 export const retrieveProjects = async (): Promise<Project[]> => basicRetrieve<Project[]>('/projects');
+
+export const login = async (): Promise<void> => {
+    const config: RequestInit = { method: 'POST' };
+    const result = await basicRetrieve<{ userToken: string}>('token/get', config);
+    sessionStorage.setItem('userToken', result.userToken);
+};
