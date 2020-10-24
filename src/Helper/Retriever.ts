@@ -15,6 +15,7 @@ export const retrieveProjects = async (): Promise<Project[]> => basicRetrieve<Pr
 
 export const login = async (): Promise<void> => {
     const config: RequestInit = { method: 'POST' };
-    const result = await basicRetrieve<{ userToken: string}>('token/get', config);
+    const result = await basicRetrieve<{ userToken: string}>('/token/get', config);
     sessionStorage.setItem('userToken', result.userToken);
+    window.location.assign('/');
 };
