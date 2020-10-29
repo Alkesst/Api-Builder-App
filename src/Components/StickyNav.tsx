@@ -1,13 +1,31 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Navbar from 'react-bootstrap/cjs/Navbar';
 import Nav from 'react-bootstrap/cjs/Nav';
 
 const StickyNav: React.FC = () => {
     const jose = 'Features';
+    const [userToken, setUserToken] = useState(sessionStorage.getItem('userToken'));
 
-    const generateFront = () => {
+    useEffect(() => {}, [userToken]);
+
+    const logOut = () => {
+        sessionStorage.removeItem('userToken');
+        setUserToken(null);
+    };
+
+    const generateLogOutButton = () => (
+        (userToken) ? <Nav><Nav.Link onClick={logOut}> Log Out </Nav.Link></Nav> : (<> </>)
+    );
+
+    const generateButtonsForLoggedUsers = () => (
+        <>
+            <Nav.Link href="/features">{jose}</Nav.Link>
+        </>
+    );
+
+    const generateButtons = () => {
         const hasSession = sessionStorage.getItem('userToken');
-        return (hasSession) ? (<Nav.Link href="/features">{jose}</Nav.Link>) : (<Nav.Link href="/login"> Login </Nav.Link>);
+        return (hasSession) ? generateButtonsForLoggedUsers() : (<Nav.Link href="/login"> Login </Nav.Link>);
     };
 
     return (
@@ -24,8 +42,9 @@ const StickyNav: React.FC = () => {
                     />
                 </Navbar.Brand>
                 <Navbar.Collapse id="responsive-navbar-nav">
-                    <Nav className="mr-auto">
-                        {generateFront()}
+                    <Nav>
+                        {generateButtons()}
+                        {generateLogOutButton()}
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
