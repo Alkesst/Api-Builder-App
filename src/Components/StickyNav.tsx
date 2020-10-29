@@ -4,9 +4,11 @@ import Nav from 'react-bootstrap/cjs/Nav';
 
 const StickyNav: React.FC = () => {
     const jose = 'Features';
-    const [userToken, setUserToken] = useState(sessionStorage.getItem('userToken'));
+    const [userToken, setUserToken] = useState<string | null>();
 
-    useEffect(() => {}, [userToken]);
+    useEffect(() => {
+        setUserToken(sessionStorage.getItem('userToken'));
+    }, [userToken]);
 
     const logOut = () => {
         sessionStorage.removeItem('userToken');
@@ -42,10 +44,10 @@ const StickyNav: React.FC = () => {
                     />
                 </Navbar.Brand>
                 <Navbar.Collapse id="responsive-navbar-nav">
-                    <Nav>
+                    <Nav className="mr-auto">
                         {generateButtons()}
-                        {generateLogOutButton()}
                     </Nav>
+                    {generateLogOutButton()}
                 </Navbar.Collapse>
             </Navbar>
         </>
