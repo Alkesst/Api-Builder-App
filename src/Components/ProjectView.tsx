@@ -6,7 +6,7 @@ import Container from 'react-bootstrap/cjs/Container';
 import Row from 'react-bootstrap/cjs/Row';
 import Col from 'react-bootstrap/cjs/Col';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
+import { faAngleDown, faAngleUp } from '@fortawesome/free-solid-svg-icons';
 
 interface ProjectViewProps extends Project {}
 
@@ -30,7 +30,7 @@ const ProjectView: React.FC<ProjectViewProps> = ({
                             aria-controls="example-collapse-text"
                             aria-expanded={open}
                         >
-                            <FontAwesomeIcon icon={faAngleDown} />
+                            <FontAwesomeIcon icon={(open) ? faAngleDown : faAngleUp} />
                         </Button>
                     </Col>
                 </Row>
