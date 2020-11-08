@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Project } from 'api-builder-types';
 import { retrieveProjects } from '../Helper/Retriever';
 import ProjectView from './ProjectView';
+import StickyNav from './StickyNav';
 
 const App = () => {
     const [projects, setProjects] = useState<Project[]>();
@@ -21,6 +22,7 @@ const App = () => {
 
     return (
         <div className="App">
+            <StickyNav />
             <header className="App-header">
                 {fetching && <div>Loading...</div>}
                 {projects && projects.map((project) => (
