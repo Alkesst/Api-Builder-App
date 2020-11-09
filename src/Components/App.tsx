@@ -1,42 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import '../Styles/App.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Project } from 'api-builder-types';
-import { retrieveProjects } from '../Helper/Retriever';
-import ProjectView from './ProjectView';
-import StickyNav from './StickyNav';
 
-const App = () => {
-    const [projects, setProjects] = useState<Project[]>();
-    const [fetching, setFetching] = useState<boolean>(false);
-
-    useEffect(() => {
-        if (!projects) {
-            setFetching(true);
-            retrieveProjects().then((result: Project[]) => {
-                setProjects(result);
-                setFetching(false);
-            });
-        }
-    }, [projects]);
-
-    return (
-        <div className="App">
-            <StickyNav />
-            <header className="App-header">
-                {fetching && <div>Loading...</div>}
-                {projects && projects.map((project) => (
-                    <ProjectView
-                        key={project.Identifier.toString()}
-                        Identifier={project.Identifier}
-                        Description={project.Description}
-                        Name={project.Name}
-                        Type={project.Type}
-                    />
-                ))}
-            </header>
-        </div>
-    );
-};
+const App = () => (
+    <div className="App App-header">
+        HO-LA!
+    </div>
+);
 
 export default App;
