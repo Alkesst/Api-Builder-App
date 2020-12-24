@@ -1,0 +1,28 @@
+.Grid {
+  height: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.Grid-Expander {
+  z-index: 1;
+  position: fixed;
+}
+
+.Grid-Panel-Expanded {
+  left: 320px;
+}
+
+.Grid-Panel-Hidden {
+  left: 0;
+}
+
+.Grid-Color {
+  background: #1d2026;
+  color: gainsboro;
+}
+
+.Panel-Color {
+  background: #49515f;
+  color: gainsboro;
+}
