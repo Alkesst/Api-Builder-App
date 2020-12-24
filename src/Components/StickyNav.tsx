@@ -3,7 +3,6 @@ import Navbar from 'react-bootstrap/cjs/Navbar';
 import Nav from 'react-bootstrap/cjs/Nav';
 
 const StickyNav: React.FC = () => {
-    const jose = 'Features';
     const [userToken, setUserToken] = useState<string | null>();
 
     useEffect(() => {
@@ -21,7 +20,7 @@ const StickyNav: React.FC = () => {
 
     const generateButtonsForLoggedUsers = () => (
         <>
-            <Nav.Link href="/features">{jose}</Nav.Link>
+            <Nav.Link href="/projects">Projects</Nav.Link>
         </>
     );
 
