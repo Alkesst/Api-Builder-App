@@ -4,7 +4,7 @@ import App from './App';
 import Login from './Login';
 import StickyNav from './StickyNav';
 import ProjectsView from './Projects';
-import Grid from './ConfigEditor/Grid';
+import ConfigurationEditor from './ConfigEditor/ConfigurationEditor';
 
 const Routes: React.FC = () => (
     <div>
@@ -12,7 +12,7 @@ const Routes: React.FC = () => (
         <Switch>
             <Route path="/login" component={Login} />
             <Route path="/projects" component={ProjectsView} />
-            <Route path="/configs/editor" component={Grid} />
+            <Route path="/configs/editor" component={ConfigurationEditor} />
             <Route exact path="/" component={App} />
         </Switch>
     </div>
