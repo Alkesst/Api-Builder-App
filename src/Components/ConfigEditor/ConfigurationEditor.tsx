@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import '../../Styles/Grid.scss';
-import EditorPanel from './EditorPanel';
-import Grid from './Grid';
+import 'Styles/ConfigEditor/Grid.scss';
+import { EditorPanel, Grid } from 'Components';
 
 const ConfigurationEditor : React.FC = () => {
     const [expanded, setExpanded] = useState<boolean>(true);

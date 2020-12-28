@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Project } from 'api-builder-types';
-import { retrieveProjects } from '../Helper/Retriever';
-import ProjectView from './ProjectView';
+import { retrieveProjects } from 'Helper/Retriever';
+import { ProjectView } from 'Components';
 
 const ProjectsView : React.FC = () => {
     const [projects, setProjects] = useState<Project[]>();
