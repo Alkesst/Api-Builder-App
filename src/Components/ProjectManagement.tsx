@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Project } from 'api-builder-types';
 import { retrieveProjects } from 'Helper/Retriever';
-import { ProjectView } from 'Components';
+import { ProjectsView as ProjectView } from 'Components';
+import 'Styles/App.scss';
 
-const ProjectsView : React.FC = () => {
-    const [projects, setProjects] = useState<Project[]>();
+const ProjectManagement : React.FC = () => {
+    const [projects, setProjects] = useState<Project[] | undefined>(undefined);
     const [fetching, setFetching] = useState<boolean>(false);
 
     useEffect(() => {
@@ -35,4 +36,4 @@ const ProjectsView : React.FC = () => {
     );
 };
 
-export default ProjectsView;
+export default ProjectManagement;
