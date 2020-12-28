@@ -18,7 +18,7 @@ const Entity : React.FC<IEntityProps> = ({ name, coordinates }: IEntityProps) =>
             className="Entity"
             style={{
                 position: 'relative',
-                right: coordinates.x,
+                left: coordinates.x,
                 top: coordinates.y,
             }}
         >
