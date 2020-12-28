@@ -19,7 +19,7 @@ const ProjectsView : React.FC = () => {
 
     return (
         <div className="App">
-            <div className="App-header">
+            <div className="App-header App-Background-Height">
                 {fetching && <div>Loading...</div>}
                 {projects && projects.map((project) => (
                     <ProjectView

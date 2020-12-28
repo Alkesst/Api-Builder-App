@@ -3,7 +3,7 @@ import '../Styles/App.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const App = () => (
-    <div className="App App-header">
+    <div className="App App-header App-Background-Height">
         HO-LA!
     </div>
 );
