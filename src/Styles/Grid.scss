@@ -31,8 +31,12 @@
   background: #49515f;
   color: gainsboro;
   height: calc(100vh - 56px);
+  transition: all 500ms linear;
+  transform: translateX(0px);
+  -webkit-transform: translateX(0px);
 }
 
 .Panel-Color.Hidden {
-
+  transform: translateX(-320px);
+  -webkit-transform: translateX(-320px);
 }

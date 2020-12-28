@@ -21,14 +21,14 @@ const Grid : React.FC = () => {
 
     return (
         <div className="App-Background-Height Grid">
-            <div className={`Panel-Color ${(!expanded) ? 'Hidden' : ' col-2'}`}>
-                Josep
-            </div>
             <button className={`Grid-Expander Grid-Panel-${buttonStyle} btn btn-outline-light`} type="button" onClick={expandHandler}>
                 <FontAwesomeIcon icon={(expanded) ? faAngleLeft : faAngleRight} />
             </button>
             <div className={`Grid-Color ${(expanded) ? 'Expanded' : ''} col-${availableColumns}`}>
                 Ey
+            </div>
+            <div className={`Panel-Color ${(!expanded) ? 'Hidden' : ''} col-2`}>
+                Josep
             </div>
         </div>
     );
