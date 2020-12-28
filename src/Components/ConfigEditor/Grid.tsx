@@ -5,15 +5,13 @@ import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons';
 
 const Grid : React.FC = () => {
     const [expanded, setExpanded] = useState<boolean>();
-    const [availableColumns, setAvailableColumns] = useState(12);
     const [buttonStyle, setButtonStyle] = useState('Expanded');
     useEffect(() => {
         if (expanded === undefined) {
             setExpanded(true);
         }
         setButtonStyle((expanded) ? 'Expanded' : 'Hidden');
-        setAvailableColumns((expanded) ? 10 : 12);
-    }, [expanded, availableColumns]);
+    }, [expanded]);
 
     const expandHandler = () => {
         setExpanded(!expanded);
@@ -24,11 +22,13 @@ const Grid : React.FC = () => {
             <button className={`Grid-Expander Grid-Panel-${buttonStyle} btn btn-outline-light`} type="button" onClick={expandHandler}>
                 <FontAwesomeIcon icon={(expanded) ? faAngleLeft : faAngleRight} />
             </button>
-            <div className={`Grid-Color ${(expanded) ? 'Expanded' : ''} col-${availableColumns}`}>
+            <div className={`Grid-Color ${(expanded) ? 'Expanded' : ''}`}>
                 Ey
             </div>
-            <div className={`Panel-Color ${(!expanded) ? 'Hidden' : ''} col-2`}>
-                Josep
+            <div className={`Panel-Color ${(!expanded) ? 'Hidden' : ''}`}>
+                <div className="Panel-Color Content">
+                    Jose
+                </div>
             </div>
         </div>
     );

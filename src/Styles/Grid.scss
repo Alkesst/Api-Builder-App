@@ -2,6 +2,7 @@
   height: 100%;
   display: flex;
   flex-wrap: wrap;
+  background: #1d2026;
 }
 
 .Grid-Expander {
@@ -10,20 +11,19 @@
 }
 
 .Grid-Panel-Expanded {
-  left: 320px;
-}
-
-.Grid-Panel-Hidden {
   left: 0;
 }
 
 .Grid-Color {
   background: #1d2026;
   color: gainsboro;
+  width: 100vw;
+  margin-left: 38px;
+  transition: all 250ms linear;
 }
 
 .Grid-Color.Expanded {
-  margin-left: 320px;
+  margin-left: 17vw;
 }
 
 .Panel-Color {
@@ -31,12 +31,15 @@
   background: #49515f;
   color: gainsboro;
   height: calc(100vh - 56px);
-  transition: all 500ms linear;
+  width: 17vw;
+  transition: all 250ms linear;
   transform: translateX(0px);
-  -webkit-transform: translateX(0px);
 }
 
 .Panel-Color.Hidden {
-  transform: translateX(-320px);
-  -webkit-transform: translateX(-320px);
+  transform: translateX(calc(-17vw + 38px));
+}
+
+.Panel-Color.Content {
+  margin-top: 34px;
 }
