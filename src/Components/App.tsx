@@ -1,5 +1,5 @@
 import React from 'react';
-import '../Styles/App.scss';
+import 'Styles/App.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const App = () => (
