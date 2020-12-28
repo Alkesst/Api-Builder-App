@@ -22,7 +22,17 @@
   color: gainsboro;
 }
 
+.Grid-Color.Expanded {
+  margin-left: 320px;
+}
+
 .Panel-Color {
+  position: fixed;
   background: #49515f;
   color: gainsboro;
+  height: calc(100vh - 56px);
+}
+
+.Panel-Color.Hidden {
+
 }

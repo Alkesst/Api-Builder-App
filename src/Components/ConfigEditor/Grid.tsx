@@ -12,8 +12,8 @@ const Grid : React.FC = () => {
             setExpanded(true);
         }
         setButtonStyle((expanded) ? 'Expanded' : 'Hidden');
-        setAvailableColumns((expanded) ? availableColumns - 2 : 12);
-    }, [expanded]);
+        setAvailableColumns((expanded) ? 10 : 12);
+    }, [expanded, availableColumns]);
 
     const expandHandler = () => {
         setExpanded(!expanded);
@@ -21,15 +21,13 @@ const Grid : React.FC = () => {
 
     return (
         <div className="App-Background-Height Grid">
-            {expanded && (
-                <div className="Panel-Color col-2">
-                    Josep
-                </div>
-            )}
+            <div className={`Panel-Color ${(!expanded) ? 'Hidden' : ' col-2'}`}>
+                Josep
+            </div>
             <button className={`Grid-Expander Grid-Panel-${buttonStyle} btn btn-outline-light`} type="button" onClick={expandHandler}>
                 <FontAwesomeIcon icon={(expanded) ? faAngleLeft : faAngleRight} />
             </button>
-            <div className={`Grid-Color col-${availableColumns}`}>
+            <div className={`Grid-Color ${(expanded) ? 'Expanded' : ''} col-${availableColumns}`}>
                 Ey
             </div>
         </div>
