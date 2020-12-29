@@ -1,0 +1,47 @@
+.Grid {
+  height: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  background: #1d2026;
+}
+
+.Grid-Expander {
+  z-index: 1;
+  position: fixed;
+  margin-left: 2px;
+  margin-top: 2px;
+}
+
+.Grid-Panel-Expanded {
+  left: 0;
+}
+
+.Grid-Color {
+  background: #1d2026;
+  color: gainsboro;
+  width: 100vw;
+  margin-left: 38px;
+  transition: all 250ms linear;
+}
+
+.Grid-Color.Expanded {
+  margin-left: 17vw;
+}
+
+.Panel-Color {
+  position: fixed;
+  background: #49515f;
+  color: gainsboro;
+  height: calc(100vh - 56px);
+  width: 17vw;
+  transition: all 250ms linear;
+  transform: translateX(0px);
+}
+
+.Panel-Color.Hidden {
+  transform: translateX(calc(-17vw + 38px));
+}
+
+.Panel-Color.Content {
+  margin-top: 34px;
+}

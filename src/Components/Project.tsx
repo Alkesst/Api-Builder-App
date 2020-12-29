@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Project } from 'api-builder-types';
+import { Project as IProject } from 'api-builder-types';
 import Button from 'react-bootstrap/cjs/Button';
 import Collapse from 'react-bootstrap/cjs/Collapse';
 import Container from 'react-bootstrap/cjs/Container';
@@ -8,9 +8,9 @@ import Col from 'react-bootstrap/cjs/Col';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown, faAngleUp } from '@fortawesome/free-solid-svg-icons';
 
-interface ProjectViewProps extends Project {}
+interface ProjectViewProps extends IProject {}
 
-const ProjectView: React.FC<ProjectViewProps> = ({
+const Project: React.FC<ProjectViewProps> = ({
     Name,
     Description,
     Type,
@@ -53,4 +53,4 @@ const ProjectView: React.FC<ProjectViewProps> = ({
     );
 };
 
-export default ProjectView;
+export default Project;

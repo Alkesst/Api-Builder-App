@@ -1,5 +1,5 @@
 import React from 'react';
-import { login } from '../Helper/Retriever';
+import { login } from 'Helper/Retriever';
 
 const Login : React.FC = () => (
     <>
