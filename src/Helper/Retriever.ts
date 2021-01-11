@@ -1,4 +1,4 @@
-import { Project } from 'api-builder-types';
+import { IProject } from 'api-builder-types';
 
 const prefixUrl = '/api';
 
@@ -11,7 +11,7 @@ export const basicRetrieve = async<T> (route: string, config?: RequestInit): Pro
     return requestResult.json();
 };
 
-export const retrieveProjects = async (): Promise<Project[]> => basicRetrieve<Project[]>('/projects');
+export const retrieveProjects = async (): Promise<IProject[]> => basicRetrieve<IProject[]>('/projects');
 
 export const login = async (): Promise<void> => {
     const config: RequestInit = { method: 'POST' };

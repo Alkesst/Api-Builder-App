@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Draggable from 'react-draggable';
 import 'Styles/ConfigEditor/Entity.scss';
 
 interface IEntityProps {
@@ -14,19 +15,17 @@ const Entity : React.FC<IEntityProps> = ({ name, coordinates }: IEntityProps) =>
     };
 
     return (
-        <div
-            className="Entity"
-            style={{
-                position: 'relative',
-                right: coordinates.x,
-                top: coordinates.y,
-            }}
+        <Draggable
+            defaultClassName="Entity"
+            defaultPosition={{ x: coordinates.x, y: coordinates.y }}
         >
-            {name}
-            <button onClick={expandHandler} type="button">
-                Expand
-            </button>
-        </div>
+            <div>
+                {name}
+                <button onClick={expandHandler} type="button">
+                    Expand
+                </button>
+            </div>
+        </Draggable>
     );
 };
 
