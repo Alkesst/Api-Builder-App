@@ -1,5 +1,7 @@
 import React from 'react';
+import { Guid } from 'guid-typescript';
 import { Entity } from 'Components';
+import { AttributeType } from 'api-builder-types';
 
 interface IGridProps {
     expanded: boolean;
@@ -8,7 +10,16 @@ interface IGridProps {
 const Grid : React.FC<IGridProps> = ({ expanded }: IGridProps) => (
     <div className={`Grid-Color ${(expanded) ? 'Expanded' : ''}`}>
         Ey
-        <Entity name="Entity1" coordinates={{ x: 250, y: 250 }} />
+        <Entity
+            Name="Entity1"
+            Identifier={Guid.create()}
+            Coordinates={{ X: 250, Y: 250 }}
+            Attributes={[{
+                Name: 'Jose', Identifier: Guid.create(), Type: AttributeType.Numeric, DefaultValue: null, IsNullable: true, Precision: null, Value: null,
+            }]}
+            Relationships={[]}
+            Constraints={[]}
+        />
     </div>
 );
 

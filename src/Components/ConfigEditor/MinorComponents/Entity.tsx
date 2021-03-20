@@ -1,29 +1,47 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Draggable from 'react-draggable';
 import 'Styles/ConfigEditor/Entity.scss';
+import { IEntity } from 'api-builder-types/entity';
+import Attribute from './Attribute';
 
-interface IEntityProps {
-    name: string;
-    coordinates: {x: number, y: number}
+interface IEntityProps extends IEntity {
 }
 
-const Entity : React.FC<IEntityProps> = ({ name, coordinates }: IEntityProps) => {
+const Entity : React.FC<IEntityProps> = ({ Name, Coordinates, Attributes }: IEntityProps) => {
     const [expanded, setExpanded] = useState<boolean>(false);
+
+    useEffect(() => { }, [expanded]);
 
     const expandHandler = () => {
         setExpanded(!expanded);
     };
 
+    const computeAttributes = () => (
+        Attributes.map((item) => (
+            <Attribute
+                Name={item.Name}
+                Type={item.Type}
+                Identifier={item.Identifier}
+                DefaultValue={null}
+                Precision={null}
+                IsNullable
+                Value={null}
+            />
+        ))
+    );
+
     return (
         <Draggable
             defaultClassName="Entity"
-            defaultPosition={{ x: coordinates.x, y: coordinates.y }}
+            defaultPosition={{ x: Coordinates.X, y: Coordinates.Y }}
         >
             <div>
-                {name}
+                {Name}
                 <button onClick={expandHandler} type="button">
                     Expand
                 </button>
+                {(expanded) ? <button type="button">Edit</button> : <> </>}
+                {(expanded) ? computeAttributes() : <> </>}
             </div>
         </Draggable>
     );
