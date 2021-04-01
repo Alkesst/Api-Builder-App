@@ -4,7 +4,7 @@ import {
     App,
     Login,
     StickyNav,
-    ProjectManagement,
+    ProjectView,
     ConfigurationEditor,
 } from 'Components';
 
@@ -13,7 +13,7 @@ const Routes: React.FC = () => (
         <StickyNav />
         <Switch>
             <Route path="/login" component={Login} />
-            <Route path="/projects" component={ProjectManagement} />
+            <Route path="/projects" component={ProjectView} />
             <Route path="/configs/editor" component={ConfigurationEditor} />
             <Route exact path="/" component={App} />
         </Switch>

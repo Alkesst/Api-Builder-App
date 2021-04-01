@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { Project } from 'api-builder-types';
+import { IProject } from 'api-builder-types';
 import { retrieveProjects } from 'Helper/Retriever';
-import { ProjectsView as ProjectView } from 'Components';
-import 'Styles/App.scss';
+import { ProjectView } from 'Components';
 
-const ProjectManagement : React.FC = () => {
-    const [projects, setProjects] = useState<Project[] | undefined>(undefined);
+const ProjectsView : React.FC = () => {
+    const [projects, setProjects] = useState<IProject[]>();
     const [fetching, setFetching] = useState<boolean>(false);
 
     useEffect(() => {
         if (!projects) {
             setFetching(true);
-            retrieveProjects().then((result: Project[]) => {
+            retrieveProjects().then((result: IProject[]) => {
                 setProjects(result);
                 setFetching(false);
             });

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Project as IProject } from 'api-builder-types';
+import { IProject } from 'api-builder-types';
 import Button from 'react-bootstrap/cjs/Button';
 import Collapse from 'react-bootstrap/cjs/Collapse';
 import Container from 'react-bootstrap/cjs/Container';
