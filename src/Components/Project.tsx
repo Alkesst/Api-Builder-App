@@ -10,7 +10,7 @@ import { faAngleDown, faAngleUp } from '@fortawesome/free-solid-svg-icons';
 
 interface ProjectViewProps extends IProject {}
 
-const ProjectView: React.FC<ProjectViewProps> = ({
+const Project: React.FC<ProjectViewProps> = ({
     Name,
     Description,
     Type,
@@ -53,4 +53,4 @@ const ProjectView: React.FC<ProjectViewProps> = ({
     );
 };
 
-export default ProjectView;
+export default Project;

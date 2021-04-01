@@ -35,4 +35,4 @@ const ProjectsView : React.FC = () => {
     );
 };
 
-export default ProjectsView;
+export default ProjectManagement;
