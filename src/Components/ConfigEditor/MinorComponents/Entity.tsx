@@ -10,7 +10,7 @@ interface IEntityProps extends IEntity {
 
 const Entity : React.FC<IEntityProps> = (
     {
-        Name, Coordinates, Attributes, Relationships,
+        Identifier, Name, Coordinates, Attributes, Relationships,
     }: IEntityProps,
 ) => {
     const nodeRef = useRef(null);
@@ -36,18 +36,14 @@ const Entity : React.FC<IEntityProps> = (
         ))
     );
 
-    const computeRelationships = () => {
-        Relationships.map((item) => (<Relationship entityId={item.Identifier.toString()} />));
-    };
-
     return (
-        <>
+        <div>
             <Draggable
                 nodeRef={nodeRef}
                 defaultClassName="Entity"
                 defaultPosition={{ x: +Coordinates.X, y: +Coordinates.Y }}
             >
-                <div ref={nodeRef}>
+                <div ref={nodeRef} id={Identifier.toString()}>
                     {Name}
                     <button onClick={expandHandler} type="button">
                         Expand
@@ -56,8 +52,15 @@ const Entity : React.FC<IEntityProps> = (
                     {(expanded) ? computeAttributes() : <> </>}
                 </div>
             </Draggable>
-            {computeRelationships()}
-        </>
+            {Relationships.map((item) => (
+                <Relationship
+                    key={item.Identifier.toString()}
+                    LeftSide={item.LeftSide}
+                    RightSide={item.RightSide}
+                    Identifier={item.Identifier}
+                />
+            ))}
+        </div>
     );
 };
 
