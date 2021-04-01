@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Draggable from 'react-draggable';
 import 'Styles/ConfigEditor/Entity.scss';
 import { IEntity } from 'api-builder-types/entity';
@@ -13,6 +13,7 @@ const Entity : React.FC<IEntityProps> = (
         Name, Coordinates, Attributes, Relationships,
     }: IEntityProps,
 ) => {
+    const nodeRef = useRef(null);
     const [expanded, setExpanded] = useState<boolean>(false);
 
     useEffect(() => { }, [expanded]);
@@ -41,10 +42,11 @@ const Entity : React.FC<IEntityProps> = (
     return (
         <>
             <Draggable
+                nodeRef={nodeRef}
                 defaultClassName="Entity"
                 defaultPosition={{ x: Coordinates.X, y: Coordinates.Y }}
             >
-                <div>
+                <div ref={nodeRef}>
                     {Name}
                     <button onClick={expandHandler} type="button">
                         Expand
