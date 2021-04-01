@@ -25,6 +25,7 @@ const Entity : React.FC<IEntityProps> = (
     const computeAttributes = () => (
         Attributes.map((item) => (
             <Attribute
+                key={item.Identifier.toString()}
                 Name={item.Name}
                 Type={item.Type}
                 Identifier={item.Identifier}
@@ -44,7 +45,7 @@ const Entity : React.FC<IEntityProps> = (
             <Draggable
                 nodeRef={nodeRef}
                 defaultClassName="Entity"
-                defaultPosition={{ x: Coordinates.X, y: Coordinates.Y }}
+                defaultPosition={{ x: +Coordinates.X, y: +Coordinates.Y }}
             >
                 <div ref={nodeRef}>
                     {Name}

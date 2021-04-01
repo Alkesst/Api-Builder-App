@@ -5,12 +5,13 @@ import Entity from './MinorComponents/Entity';
 interface IGridProps {
     expanded: boolean;
     projectEntities: IEntity[];
+    loaded: boolean;
 }
 
-const Grid : React.FC<IGridProps> = ({ expanded, projectEntities }: IGridProps) => (
+const Grid : React.FC<IGridProps> = ({ expanded, projectEntities, loaded }: IGridProps) => (
     <div className={`Grid-Color ${(expanded) ? 'Expanded' : ''}`}>
         Ey
-        {projectEntities.map((element: IEntity) => (
+        {loaded && projectEntities.map((element: IEntity) => (
             <Entity
                 key={element.Identifier.toString()}
                 Identifier={element.Identifier}
