@@ -1,42 +1,24 @@
 import React, {
-    useCallback, useEffect, useRef, useState,
+    useEffect, useRef, useState,
 } from 'react';
 import Draggable from 'react-draggable';
 import 'Styles/ConfigEditor/Entity.scss';
 import { IEntity } from 'api-builder-types/entity';
 import Attribute from './Attribute';
-import Relationship from './Relationship';
 
 interface IEntityProps extends IEntity {
 }
 
 const Entity : React.FC<IEntityProps> = (
     {
-        Identifier, Name, Coordinates, Attributes, Relationships,
+        Identifier, Name, Coordinates, Attributes,
     }: IEntityProps,
 ) => {
     const nodeRef = useRef(null);
     const [expanded, setExpanded] = useState<boolean>(false);
-    const [relationships, setRelationships] = useState<any>(<></>);
-
-    const recalculateRelationship = () => setRelationships(Relationships.map((item) => (
-        <Relationship
-            key={item.Identifier.toString()}
-            LeftSide={item.LeftSide}
-            RightSide={item.RightSide}
-            Identifier={item.Identifier}
-        />
-    )));
-
-    const recalculateRelationshipsCallback = useCallback(() => {
-        recalculateRelationship();
-    }, [recalculateRelationship]);
 
     useEffect(() => {
-        if (!relationships) {
-            recalculateRelationshipsCallback();
-        }
-    }, [expanded, recalculateRelationshipsCallback, relationships]);
+    }, [expanded]);
 
     const expandHandler = () => {
         setExpanded(!expanded);
@@ -62,7 +44,7 @@ const Entity : React.FC<IEntityProps> = (
                 nodeRef={nodeRef}
                 defaultClassName="Entity"
                 defaultPosition={{ x: +Coordinates.X, y: +Coordinates.Y }}
-                onDrag={recalculateRelationship}
+                // onDrag={recalculateRelationship}
             >
                 <div ref={nodeRef} id={Identifier.toString()}>
                     {Name}
@@ -73,7 +55,6 @@ const Entity : React.FC<IEntityProps> = (
                     {(expanded) ? computeAttributes() : <> </>}
                 </div>
             </Draggable>
-            {relationships}
         </div>
     );
 };
