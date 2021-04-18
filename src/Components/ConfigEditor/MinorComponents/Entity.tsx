@@ -1,22 +1,25 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, {
+    useEffect, useRef, useState,
+} from 'react';
 import Draggable from 'react-draggable';
 import 'Styles/ConfigEditor/Entity.scss';
 import { IEntity } from 'api-builder-types/entity';
 import Attribute from './Attribute';
-import Relationship from './Relationship';
 
 interface IEntityProps extends IEntity {
+    onDragHandler: (dragging: boolean) => void;
 }
 
 const Entity : React.FC<IEntityProps> = (
     {
-        Identifier, Name, Coordinates, Attributes, Relationships,
+        Identifier, Name, Coordinates, Attributes, onDragHandler,
     }: IEntityProps,
 ) => {
     const nodeRef = useRef(null);
     const [expanded, setExpanded] = useState<boolean>(false);
 
-    useEffect(() => { }, [expanded]);
+    useEffect(() => {
+    }, [expanded]);
 
     const expandHandler = () => {
         setExpanded(!expanded);
@@ -42,6 +45,8 @@ const Entity : React.FC<IEntityProps> = (
                 nodeRef={nodeRef}
                 defaultClassName="Entity"
                 defaultPosition={{ x: +Coordinates.X, y: +Coordinates.Y }}
+                onDrag={() => onDragHandler(true)}
+                onStop={() => onDragHandler(false)}
             >
                 <div ref={nodeRef} id={Identifier.toString()}>
                     {Name}
@@ -52,14 +57,6 @@ const Entity : React.FC<IEntityProps> = (
                     {(expanded) ? computeAttributes() : <> </>}
                 </div>
             </Draggable>
-            {Relationships.map((item) => (
-                <Relationship
-                    key={item.Identifier.toString()}
-                    LeftSide={item.LeftSide}
-                    RightSide={item.RightSide}
-                    Identifier={item.Identifier}
-                />
-            ))}
         </div>
     );
 };

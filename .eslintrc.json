@@ -3,7 +3,18 @@
   "rules": {
     "react/jsx-indent": ["error", 4],
     "react/jsx-indent-props": ["error", 4],
-    "@typescript-eslint/indent": ["error", 4]
+    "@typescript-eslint/indent": ["error", 4],
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "js": "never",
+        "jsx": "never",
+        "ts": "never",
+        "tsx": "never",
+        ".d.ts": "never"
+      }
+    ]
   },
   "parserOptions": {
     "project": "./tsconfig.json"
