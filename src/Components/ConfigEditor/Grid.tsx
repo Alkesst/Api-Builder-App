@@ -1,4 +1,6 @@
-import React, { useMemo, useState } from 'react';
+import React, {
+    useCallback, useEffect, useMemo, useState,
+} from 'react';
 import { IEntity } from 'api-builder-types';
 import { IRelationship } from 'api-builder-types/relationship';
 import Entity from './MinorComponents/Entity';
@@ -14,6 +16,18 @@ interface IGridProps {
 
 const Grid : React.FC<IGridProps> = ({ expanded, projectEntities, loaded }: IGridProps) => {
     const [relations, setRelations] = useState<any[]>([]);
+
+    const entityRelationships = projectEntities.map((entity: IEntity) => (
+        entity.Relationships.map((relationship: IRelationship) => (
+            <Relationship
+                key={relationship.Identifier.toString()}
+                LeftSide={relationship.LeftSide}
+                RightSide={relationship.RightSide}
+                Identifier={relationship.Identifier}
+            />
+        ))
+    ));
+
     const computeRelations = (relationships: IRelationship[]) => {
         setRelations(relationships.map((item) => (
             <Relationship
@@ -64,7 +78,7 @@ const Grid : React.FC<IGridProps> = ({ expanded, projectEntities, loaded }: IGri
         <div className={`Grid-Color ${(expanded) ? 'Expanded' : ''}`}>
             Ey
             {loaded && generateEntities}
-            {relations}
+            {entityRelationships}
         </div>
     );
 };
