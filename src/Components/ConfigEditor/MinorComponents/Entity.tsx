@@ -4,16 +4,15 @@ import React, {
 import Draggable from 'react-draggable';
 import 'Styles/ConfigEditor/Entity.scss';
 import { IEntity } from 'api-builder-types/entity';
-import { IRelationship } from 'api-builder-types/relationship';
 import Attribute from './Attribute';
 
 interface IEntityProps extends IEntity {
-    recalculateRelationships: (relationships: IRelationship[]) => void;
+    onDragHandler: (dragging: boolean) => void;
 }
 
 const Entity : React.FC<IEntityProps> = (
     {
-        Identifier, Name, Coordinates, Attributes, recalculateRelationships, Relationships,
+        Identifier, Name, Coordinates, Attributes, onDragHandler,
     }: IEntityProps,
 ) => {
     const nodeRef = useRef(null);
@@ -46,7 +45,8 @@ const Entity : React.FC<IEntityProps> = (
                 nodeRef={nodeRef}
                 defaultClassName="Entity"
                 defaultPosition={{ x: +Coordinates.X, y: +Coordinates.Y }}
-                onDrag={() => recalculateRelationships(Relationships)}
+                onDrag={() => onDragHandler(true)}
+                onStop={() => onDragHandler(false)}
             >
                 <div ref={nodeRef} id={Identifier.toString()}>
                     {Name}

@@ -1,5 +1,6 @@
 import React, {
-    useCallback, useEffect, useMemo, useState,
+    useCallback,
+    useMemo, useState,
 } from 'react';
 import { IEntity } from 'api-builder-types';
 import { IRelationship } from 'api-builder-types/relationship';
@@ -15,7 +16,7 @@ interface IGridProps {
 }
 
 const Grid : React.FC<IGridProps> = ({ expanded, projectEntities, loaded }: IGridProps) => {
-    const [relations, setRelations] = useState<any[]>([]);
+    const [,setEntityBeingDragged] = useState<boolean>(false);
 
     const entityRelationships = projectEntities.map((entity: IEntity) => (
         entity.Relationships.map((relationship: IRelationship) => (
@@ -28,16 +29,12 @@ const Grid : React.FC<IGridProps> = ({ expanded, projectEntities, loaded }: IGri
         ))
     ));
 
-    const computeRelations = (relationships: IRelationship[]) => {
-        setRelations(relationships.map((item) => (
-            <Relationship
-                key={item.Identifier.toString()}
-                LeftSide={item.LeftSide}
-                RightSide={item.RightSide}
-                Identifier={item.Identifier}
-            />
-        )));
-    };
+    const onDragHandler = useCallback((dragging: boolean) => {
+        if (dragging) {
+            setEntityBeingDragged(!dragging);
+        }
+        setEntityBeingDragged(dragging);
+    }, []);
 
     const references: EntityReference[] = useMemo(() => {
         const tempRefObject: EntityReference[] = [];
@@ -65,7 +62,7 @@ const Grid : React.FC<IGridProps> = ({ expanded, projectEntities, loaded }: IGri
                     Identifier={entity.Identifier}
                     Name={entity.Name}
                     Relationships={entity.Relationships}
-                    recalculateRelationships={computeRelations}
+                    onDragHandler={onDragHandler}
                     Attributes={entity.Attributes}
                     Coordinates={entity.Coordinates}
                     Constraints={entity.Constraints}
