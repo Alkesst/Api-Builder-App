@@ -69,7 +69,7 @@ const Grid : React.FC<IGridProps> = ({ expanded, projectEntities, loaded }: IGri
                 />
             </div>
         );
-    }), [projectEntities, references]);
+    }), [onDragHandler, projectEntities, references]);
 
     return (
         <div className={`Grid-Color ${(expanded) ? 'Expanded' : ''}`}>
