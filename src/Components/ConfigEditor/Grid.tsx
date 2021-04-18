@@ -1,9 +1,10 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { IEntity } from 'api-builder-types';
 import { IRelationship } from 'api-builder-types/relationship';
 import Entity from './MinorComponents/Entity';
 import { hasRelationships, getEntityReference } from '../../Helper/RelationshipHelper';
 import { EntityReference } from '../../Types/ViewTypes';
+import Relationship from './MinorComponents/Relationship';
 
 interface IGridProps {
     expanded: boolean;
@@ -12,6 +13,18 @@ interface IGridProps {
 }
 
 const Grid : React.FC<IGridProps> = ({ expanded, projectEntities, loaded }: IGridProps) => {
+    const [relations, setRelations] = useState<any[]>([]);
+    const computeRelations = (relationships: IRelationship[]) => {
+        setRelations(relationships.map((item) => (
+            <Relationship
+                key={item.Identifier.toString()}
+                LeftSide={item.LeftSide}
+                RightSide={item.RightSide}
+                Identifier={item.Identifier}
+            />
+        )));
+    };
+
     const references: EntityReference[] = useMemo(() => {
         const tempRefObject: EntityReference[] = [];
         if (projectEntities && projectEntities.length > 0) {
@@ -38,6 +51,7 @@ const Grid : React.FC<IGridProps> = ({ expanded, projectEntities, loaded }: IGri
                     Identifier={entity.Identifier}
                     Name={entity.Name}
                     Relationships={entity.Relationships}
+                    recalculateRelationships={computeRelations}
                     Attributes={entity.Attributes}
                     Coordinates={entity.Coordinates}
                     Constraints={entity.Constraints}
@@ -46,20 +60,11 @@ const Grid : React.FC<IGridProps> = ({ expanded, projectEntities, loaded }: IGri
         );
     }), [projectEntities, references]);
 
-    /*
-    * const recalculateRelationship = () => setRelationships(Relationships.map((item) => (
-        <Relationship
-            key={item.Identifier.toString()}
-            LeftSide={item.LeftSide}
-            RightSide={item.RightSide}
-            Identifier={item.Identifier}
-        />
-    )));
-    * */
     return (
         <div className={`Grid-Color ${(expanded) ? 'Expanded' : ''}`}>
             Ey
             {loaded && generateEntities}
+            {relations}
         </div>
     );
 };
