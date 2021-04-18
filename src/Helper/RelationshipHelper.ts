@@ -1,5 +1,5 @@
 import { IEntity } from 'api-builder-types';
-import { EntityReference } from '../Types/react-app-env';
+import { EntityReference } from '../Types/ViewTypes';
 
 export const hasRelationships = (
     entity: IEntity,
