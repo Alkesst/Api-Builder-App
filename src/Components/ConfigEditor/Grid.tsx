@@ -2,7 +2,7 @@ import React, {
     useCallback,
     useMemo, useState,
 } from 'react';
-import { IEntity } from 'api-builder-types';
+import { IEntity, ProjectType } from 'api-builder-types';
 import { IRelationship } from 'api-builder-types/relationship';
 import Entity from './MinorComponents/Entity';
 import { hasRelationships, getEntityReference } from '../../Helper/RelationshipHelper';
@@ -13,16 +13,22 @@ interface IGridProps {
     expanded: boolean;
     projectEntities: IEntity[];
     loaded: boolean;
+    projectType: ProjectType | undefined;
 }
 
-const Grid : React.FC<IGridProps> = ({ expanded, projectEntities, loaded }: IGridProps) => {
+const Grid : React.FC<IGridProps> = (
+    {
+        expanded, projectEntities, loaded, projectType,
+    }
+    : IGridProps,
+) => {
     const [,setEntityBeingDragged] = useState<boolean>(false);
 
     const entityRelationships = projectEntities.map((entity: IEntity) => (
         entity.Relationships.map((relationship: IRelationship) => (
             <Relationship
                 key={relationship.Identifier.toString()}
-                LeftSide={relationship.LeftSide}
+                Entity={entity.Identifier}
                 RightSide={relationship.RightSide}
                 Identifier={relationship.Identifier}
             />
@@ -54,11 +60,11 @@ const Grid : React.FC<IGridProps> = ({ expanded, projectEntities, loaded }: IGri
     }, [projectEntities]);
 
     const generateEntities = useMemo(() => projectEntities.map((entity: IEntity) => {
-        const entityRef = getEntityReference(references, entity.Identifier.toString());
+        const entityRef = getEntityReference(references, entity.Identifier);
         return (
-            <div ref={entityRef} key={`div-${entity.Identifier.toString()}`}>
+            <div ref={entityRef} key={`div-${entity.Identifier}`}>
                 <Entity
-                    key={entity.Identifier.toString()}
+                    key={entity.Identifier}
                     Identifier={entity.Identifier}
                     Name={entity.Name}
                     Relationships={entity.Relationships}
@@ -73,7 +79,7 @@ const Grid : React.FC<IGridProps> = ({ expanded, projectEntities, loaded }: IGri
 
     return (
         <div className={`Grid-Color ${(expanded) ? 'Expanded' : ''}`}>
-            Ey
+            {projectType}
             {loaded && generateEntities}
             {entityRelationships}
         </div>
