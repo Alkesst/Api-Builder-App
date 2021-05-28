@@ -3,12 +3,13 @@ import Xarrow from 'react-xarrows';
 import { IRelationship } from 'api-builder-types/relationship';
 
 interface IRelationshipProps extends IRelationship {
+    Entity: string;
 }
 
 const Relationship : React.FC<IRelationshipProps> = (
-    { LeftSide, RightSide }: IRelationshipProps,
+    { Entity, RightSide }: IRelationshipProps,
 ) => (
-    <Xarrow start={RightSide.Entity.toString()} end={LeftSide.Entity.toString()} />
+    <Xarrow start={Entity.toString()} end={RightSide.Entity.toString()} />
 );
 
 export default Relationship;

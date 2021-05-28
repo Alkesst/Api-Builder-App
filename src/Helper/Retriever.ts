@@ -1,4 +1,4 @@
-import { IEntity, IProject } from 'api-builder-types';
+import { IEntity, IProject, IProjectConfig } from 'api-builder-types';
 
 const prefixUrl = '/api';
 
@@ -13,6 +13,7 @@ export const basicRetrieve = async<T> (route: string, config?: RequestInit): Pro
 
 export const retrieveProjects = async (): Promise<IProject[]> => basicRetrieve<IProject[]>('/projects');
 export const retrieveProjectConfig = async (): Promise<IEntity[]> => basicRetrieve<IEntity[]>('/projectConfig');
+export const getProject = async () : Promise<IProjectConfig> => basicRetrieve<IProjectConfig>('/projectConfig/36e20bb4-aa8e-4ee6-8c10-dddd26b6e76a');
 
 export const login = async (): Promise<void> => {
     const config: RequestInit = { method: 'POST' };
