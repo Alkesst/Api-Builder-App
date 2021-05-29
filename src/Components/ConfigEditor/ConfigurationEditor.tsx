@@ -34,7 +34,11 @@ const ConfigurationEditor : React.FC = () => {
                 loaded={loaded}
                 projectType={projectTypeLabel}
             />
-            <EditorPanel expanded={expanded} setExpanded={setExpanded} />
+            <EditorPanel
+                expanded={expanded}
+                setExpanded={setExpanded}
+                projectEntities={projectEntities || []}
+            />
         </div>
     );
 };
