@@ -2,7 +2,7 @@ import React, {
     useCallback,
     useMemo, useState,
 } from 'react';
-import { IEntity, ProjectType } from 'api-builder-types';
+import { IEntity } from 'api-builder-types';
 import { IRelationship } from 'api-builder-types/relationship';
 import Entity from './MinorComponents/Entity';
 import { hasRelationships, getEntityReference } from '../../Helper/RelationshipHelper';
@@ -13,7 +13,7 @@ interface IGridProps {
     expanded: boolean;
     projectEntities: IEntity[];
     loaded: boolean;
-    projectType: ProjectType | undefined;
+    projectType: string;
 }
 
 const Grid : React.FC<IGridProps> = (

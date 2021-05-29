@@ -2,7 +2,7 @@ import { IEntity, IProject, IProjectConfig } from 'api-builder-types';
 
 const prefixUrl = '/api';
 
-export const basicRetrieve = async<T> (route: string, config?: RequestInit): Promise<T> => {
+export const baseRequest = async<T> (route: string, config?: RequestInit): Promise<T> => {
     const configWithCredentials: RequestInit = { credentials: 'include', ...(config || {}) };
     const requestResult = await fetch(`${prefixUrl}${route}`, configWithCredentials);
     if (requestResult.status === 401) {
@@ -11,13 +11,13 @@ export const basicRetrieve = async<T> (route: string, config?: RequestInit): Pro
     return requestResult.json();
 };
 
-export const retrieveProjects = async (): Promise<IProject[]> => basicRetrieve<IProject[]>('/projects');
-export const retrieveProjectConfig = async (): Promise<IEntity[]> => basicRetrieve<IEntity[]>('/projectConfig');
-export const getProject = async () : Promise<IProjectConfig> => basicRetrieve<IProjectConfig>('/projectConfig/36e20bb4-aa8e-4ee6-8c10-dddd26b6e76a');
+export const retrieveProjects = async (): Promise<IProject[]> => baseRequest<IProject[]>('/projects');
+export const retrieveProjectConfig = async (): Promise<IEntity[]> => baseRequest<IEntity[]>('/projectConfig');
+export const getProject = async () : Promise<IProjectConfig> => baseRequest<IProjectConfig>('/projectConfig/36e20bb4-aa8e-4ee6-8c10-dddd26b6e76a');
 
 export const login = async (): Promise<void> => {
     const config: RequestInit = { method: 'POST' };
-    const result = await basicRetrieve<{ userToken: string}>('/token/get', config);
+    const result = await baseRequest<{ userToken: string}>('/token/get', config);
     sessionStorage.setItem('userToken', result.userToken);
     window.location.assign('/');
 };

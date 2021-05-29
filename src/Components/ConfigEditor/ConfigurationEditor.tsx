@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import 'Styles/ConfigEditor/Grid.scss';
 import { EditorPanel, Grid } from 'Components';
-import { IEntity, IProjectConfig } from 'api-builder-types';
+import { IEntity, IProjectConfig, ProjectType } from 'api-builder-types';
 import { getProject } from '../../Helper/Retriever';
 
 const ConfigurationEditor : React.FC = () => {
-    const [projectConfig, setProjectconfig] = useState<IProjectConfig>();
+    const [, setProjectConfig] = useState<IProjectConfig>();
     const [projectEntities, setProjectEntities] = useState<IEntity[]>();
     const [expanded, setExpanded] = useState<boolean>(true);
     const [loaded, setLoaded] = useState<boolean>(false);
+    const [projectTypeLabel, setProjectTypeLabel] = useState<string>('');
 
     const configId = 10;
 
@@ -17,9 +18,10 @@ const ConfigurationEditor : React.FC = () => {
             setLoaded(false);
             getProject()
                 .then((result: IProjectConfig) => {
-                    setProjectconfig(result);
+                    setProjectConfig(result);
                     setProjectEntities(result.Entities);
                     setLoaded(true);
+                    setProjectTypeLabel(`Project Type: ${ProjectType[result.Type]}`);
                 });
         }
     }, [projectEntities, configId]);
@@ -30,9 +32,13 @@ const ConfigurationEditor : React.FC = () => {
                 expanded={expanded}
                 projectEntities={projectEntities || []}
                 loaded={loaded}
-                projectType={projectConfig?.Type}
+                projectType={projectTypeLabel}
             />
-            <EditorPanel expanded={expanded} setExpanded={setExpanded} />
+            <EditorPanel
+                expanded={expanded}
+                setExpanded={setExpanded}
+                projectEntities={projectEntities || []}
+            />
         </div>
     );
 };

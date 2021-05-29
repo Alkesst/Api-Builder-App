@@ -48,7 +48,7 @@ const Entity : React.FC<IEntityProps> = (
                 onDrag={() => onDragHandler(true)}
                 onStop={() => onDragHandler(false)}
             >
-                <div ref={nodeRef} id={Identifier.toString()}>
+                <div ref={nodeRef} id={Identifier.toString()} className="padding-10">
                     {Name}
                     <button onClick={expandHandler} type="button">
                         Expand

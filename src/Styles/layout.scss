@@ -1,0 +1,36 @@
+.flex {
+  display: flex;
+}
+
+.content-space-between {
+  justify-content: space-between;
+}
+
+.padding-10 {
+  padding: 10px;
+}
+
+
+.padding-5 {
+  padding: 5px;
+}
+
+.padding-right-5 {
+  padding-left: 5px;
+}
+
+.padding-left-5 {
+  padding-right: 5px;
+}
+.padding-top-5 {
+  padding-top: 5px;
+}
+
+.padding-sides-5 {
+  @extend .padding-left-5;
+  @extend .padding-right-5;
+}
+
+.margin-bot-10 {
+  margin-bottom: 10px;
+}
