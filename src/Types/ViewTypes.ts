@@ -23,10 +23,3 @@ export interface AttributeChangeHandlerRow {
     onChangeHandler: StateSetterCallback;
     typeOnChangeHandler: StateSetterCallback;
 }
-
-export interface EntityAttribute {
-    entityId: string;
-    attribute: IAttribute;
-    onChangeHandler: StateSetterCallback;
-    typeOnChangeHandler: StateSetterCallback;
-}

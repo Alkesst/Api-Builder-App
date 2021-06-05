@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import 'Styles/ConfigEditor/Grid.scss';
 import { EditorPanel, Grid } from 'Components';
-import { useConfigurationEditorStore } from '../Stores/GridStore';
+import { useConfigurationEditorStore } from '../Stores/ConfigEditorStore';
 
 const ConfigurationEditor : React.FC = () => {
     const { projectConfig, fetchProjectConfig, loading } = useConfigurationEditorStore();

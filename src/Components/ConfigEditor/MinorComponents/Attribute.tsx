@@ -14,26 +14,23 @@ interface IAttributeProps extends IAttribute {
     };
 }; */
 
-const Attribute : React.FC<IAttributeProps> = (props: IAttributeProps) => {
-    const { Name, Type } = props;
+const Attribute : React.FC<IAttributeProps> = ({ Name, Type }: IAttributeProps) => {
     // const pushNewAttribute = useStoreGrid((state) => state.pushNewAttribute);
-    const [name, setName] = useState<string>(Name);
-    const [type, setType] = useState<AttributeType>(Type);
     const [needsInit, setNeedsInit] = useState<boolean>(true);
 
     useEffect(() => {
         if (needsInit) {
             setNeedsInit(false);
         }
-    }, [setName, setType, props, needsInit]);
+    }, [needsInit]);
 
     return (
         <div className="flex content-space-between padding-sides-5">
             <div>
-                {name}
+                {Name}
             </div>
             <div>
-                {AttributeType[type]}
+                {AttributeType[Type]}
             </div>
         </div>
     );

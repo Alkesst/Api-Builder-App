@@ -10,8 +10,7 @@ import { EntityReference, ModalInputRow } from '../../Types/ViewTypes';
 import Relationship from './MinorComponents/Relationship';
 import 'Styles/ConfigEditor/Modal.scss';
 import Modal from './MinorComponents/Modal';
-import { fromAttributesToModalInputRows } from '../../Helper/ModalHelper';
-import { useStoreGrid } from '../Stores/GridStore';
+// import { fromAttributesToModalInputRows } from '../../Helper/ModalHelper';
 
 interface IGridProps {
     expanded: boolean;
@@ -26,17 +25,19 @@ const Grid : React.FC<IGridProps> = (
     }
     : IGridProps,
 ) => {
-    const attributes = useStoreGrid((state) => state.attributes);
     const [,setEntityBeingDragged] = useState<boolean>(false);
     const [edit, setEdit] = useState<boolean>(false);
     const [modalRows, setModalRows] = useState<ModalInputRow[]>([]);
 
     const onEditHandler = useCallback((entityId: string) => {
-        const entityAttributes = attributes.filter((attribute) => attribute.entityId === entityId);
+        setModalRows([]);
+        console.log(entityId);
+        /* const entityAttributes = attributes.filter((attribute) =>
+         attribute.entityId === entityId);
         const modalRowsTemp = fromAttributesToModalInputRows(entityAttributes);
         setModalRows(modalRowsTemp);
-        setEdit(true);
-    }, [attributes]);
+        setEdit(true); */
+    }, []);
 
     const entityRelationships = projectEntities.map((entity: IEntity) => (
         entity.Relationships.map((relationship: IRelationship) => (
