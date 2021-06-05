@@ -6,10 +6,12 @@ import { IEntity } from 'api-builder-types';
 import { IRelationship } from 'api-builder-types/relationship';
 import Entity from './MinorComponents/Entity';
 import { hasRelationships, getEntityReference } from '../../Helper/RelationshipHelper';
-import { EntityReference } from '../../Types/ViewTypes';
+import { EntityReference, ModalInputRow } from '../../Types/ViewTypes';
 import Relationship from './MinorComponents/Relationship';
 import 'Styles/ConfigEditor/Modal.scss';
 import Modal from './MinorComponents/Modal';
+import useStoreGrid from '../Stores/GridStore';
+import { fromAttributesToModalInputRows } from '../../Helper/ModalHelper';
 
 interface IGridProps {
     expanded: boolean;
@@ -24,13 +26,17 @@ const Grid : React.FC<IGridProps> = (
     }
     : IGridProps,
 ) => {
+    const attributes = useStoreGrid((state) => state.attributes);
     const [,setEntityBeingDragged] = useState<boolean>(false);
     const [edit, setEdit] = useState<boolean>(false);
+    const [modalRows, setModalRows] = useState<ModalInputRow[]>([]);
 
-    const onEditHandler = (entityId: string) => {
+    const onEditHandler = useCallback((entityId: string) => {
+        const entityAttributes = attributes.filter((attribute) => attribute.entityId === entityId);
+        const modalRowsTemp = fromAttributesToModalInputRows(entityAttributes);
+        setModalRows(modalRowsTemp);
         setEdit(true);
-        console.log(entityId);
-    };
+    }, [attributes]);
 
     const entityRelationships = projectEntities.map((entity: IEntity) => (
         entity.Relationships.map((relationship: IRelationship) => (
@@ -84,12 +90,12 @@ const Grid : React.FC<IGridProps> = (
                 />
             </div>
         );
-    }), [onDragHandler, projectEntities, references]);
+    }), [onDragHandler, projectEntities, references, onEditHandler]);
 
     return (
         <div className={`Grid-Color ${(expanded) ? 'Expanded' : ''}`}>
             {projectType}
-            <Modal showing={edit} setShowing={setEdit} modalRows={[]} />
+            <Modal showing={edit} setShowing={setEdit} modalRows={modalRows} />
             {loaded && generateEntities}
             {entityRelationships}
         </div>

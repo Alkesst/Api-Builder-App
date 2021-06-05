@@ -1,4 +1,5 @@
 import create from 'zustand';
+import { devtools } from 'zustand/middleware';
 import { EntityAttribute } from '../../Types/ViewTypes';
 
 interface GridState {
@@ -6,12 +7,12 @@ interface GridState {
     pushNewAttribute: (attribute: EntityAttribute) => void;
 }
 
-const useStoreGrid = create<GridState>((set) => ({
+const useStoreGrid = create<GridState>(devtools((set) => ({
     attributes: [],
     pushNewAttribute:
         (attribute: EntityAttribute) => set((state) => (
             { attributes: [...state.attributes, attribute] }
         )),
-}));
+})));
 
 export default useStoreGrid;

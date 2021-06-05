@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { ModalInputRow } from '../../../Types/ViewTypes';
 
 interface ModalProps {
@@ -12,22 +12,20 @@ const Modal: React.FC<ModalProps> = ({ showing, setShowing, modalRows } : ModalP
         setShowing(false);
     };
 
-    const computeModalRows = () => {
-        modalRows.map((row: ModalInputRow) => (
-            <div key={`modal-row-${row.id}`}>
-                <label htmlFor={`input-${row.id}`}>
-                    {row.label}
-                    <input id={`input-${row.id}`} />
-                </label>
-            </div>
-        ));
-    };
+    const computeModalRows = useMemo(() => modalRows.map((row: ModalInputRow) => (
+        <div key={`modal-row-${row.id}`}>
+            <label htmlFor={`input-${row.id}`}>
+                {row.label}
+                <input id={`input-${row.id}`} />
+            </label>
+        </div>
+    )), [modalRows]);
 
     return (
         <div className={`modal-edit display-${showing ? 'block' : 'none'}`}>
             <div className="modal-container">
                 <button type="button" onClick={closeHandler}>Close!</button>
-                {computeModalRows()}
+                {computeModalRows}
             </div>
         </div>
     );

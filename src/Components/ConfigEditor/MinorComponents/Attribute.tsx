@@ -19,15 +19,19 @@ const Attribute : React.FC<IAttributeProps> = (props: IAttributeProps) => {
     const pushNewAttribute = useStoreGrid((state) => state.pushNewAttribute);
     const [name, setName] = useState<string>(Name);
     const [type, setType] = useState<AttributeType>(Type);
+    const [needsInit, setNeedsInit] = useState<boolean>(true);
 
     useEffect(() => {
-        pushNewAttribute({
-            attribute: buildAttributeFromProps(props),
-            entityId: props.entityId,
-            onChangeHandler: setName,
-            typeOnChangeHandler: setType,
-        });
-    }, [pushNewAttribute, setName, setType, props]);
+        if (needsInit) {
+            pushNewAttribute({
+                attribute: buildAttributeFromProps(props),
+                entityId: props.entityId,
+                onChangeHandler: setName,
+                typeOnChangeHandler: setType,
+            });
+            setNeedsInit(false);
+        }
+    }, [pushNewAttribute, setName, setType, props, needsInit]);
 
     return (
         <div className="flex content-space-between padding-sides-5">
@@ -35,7 +39,7 @@ const Attribute : React.FC<IAttributeProps> = (props: IAttributeProps) => {
                 {name}
             </div>
             <div>
-                {type}
+                {AttributeType[type]}
             </div>
         </div>
     );

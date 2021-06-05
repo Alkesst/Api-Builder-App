@@ -1,6 +1,6 @@
 import { AttributeChangeHandlerRow, ModalInputRow } from '../Types/ViewTypes';
 
-const fromAttributeToModalInputRow = (
+export const fromAttributeToModalInputRow = (
     attributeRow: AttributeChangeHandlerRow,
 ): ModalInputRow => ({
     id: attributeRow.attribute.Identifier,
@@ -10,8 +10,6 @@ const fromAttributeToModalInputRow = (
     typeOnChangeHandler: attributeRow.typeOnChangeHandler,
 });
 
-const fromAttributesToModalInputRows = (
+export const fromAttributesToModalInputRows = (
     entries: AttributeChangeHandlerRow[],
 ) => entries.map((element) => fromAttributeToModalInputRow(element));
-
-export default { fromAttributeToModalInputRow, fromAttributesToModalInputRows };
