@@ -8,11 +8,12 @@ import Attribute from './Attribute';
 
 interface IEntityProps extends IEntity {
     onDragHandler: (dragging: boolean) => void;
+    onEditHandler: (entityId: string) => void;
 }
 
 const Entity : React.FC<IEntityProps> = (
     {
-        Identifier, Name, Coordinates, Attributes, onDragHandler,
+        Identifier, Name, Coordinates, Attributes, onDragHandler, onEditHandler,
     }: IEntityProps,
 ) => {
     const nodeRef = useRef(null);
@@ -28,12 +29,13 @@ const Entity : React.FC<IEntityProps> = (
     const computeAttributes = () => (
         Attributes.map((item) => (
             <Attribute
-                key={item.Identifier.toString()}
+                key={item.Identifier}
                 Name={item.Name}
                 Type={item.Type}
                 Identifier={item.Identifier}
                 DefaultValue={null}
                 Precision={null}
+                entityId={Identifier}
                 IsNullable
             />
         ))
@@ -48,12 +50,12 @@ const Entity : React.FC<IEntityProps> = (
                 onDrag={() => onDragHandler(true)}
                 onStop={() => onDragHandler(false)}
             >
-                <div ref={nodeRef} id={Identifier.toString()} className="padding-10">
+                <div ref={nodeRef} id={Identifier} className="padding-10">
                     {Name}
                     <button onClick={expandHandler} type="button">
                         Expand
                     </button>
-                    {(expanded) ? <button type="button">Edit</button> : <> </>}
+                    {(expanded) ? <button type="button" onClick={() => onEditHandler(Identifier)}>Edit</button> : <> </>}
                     {(expanded) ? computeAttributes() : <> </>}
                 </div>
             </Draggable>
