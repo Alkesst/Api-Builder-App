@@ -11,11 +11,12 @@ const Modal: React.FC<ModalProps> = ({ showing, setShowing, modalRows } : ModalP
     const closeHandler = () => {
         setShowing(false);
     };
-
+    //  onChange={((event) => row.inputOnChangeHandler(event.target.value))} />
     const computeModalRows = useMemo(() => modalRows.map((row: ModalInputRow) => (
         <div key={`modal-row-${row.id}`}>
             <label htmlFor={`input-${row.id}`}>
-                <input id={`input-${row.id}`} value={row.label} onChange={((event) => row.inputOnChangeHandler(event.target.value))} />
+                <input id={`input-${row.id}`} value={row.label} />
+
             </label>
         </div>
     )), [modalRows]);

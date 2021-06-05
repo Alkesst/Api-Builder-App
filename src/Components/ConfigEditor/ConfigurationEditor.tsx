@@ -4,16 +4,19 @@ import { EditorPanel, Grid } from 'Components';
 import { useConfigurationEditorStore } from '../Stores/ConfigEditorStore';
 
 const ConfigurationEditor : React.FC = () => {
-    const { projectConfig, fetchProjectConfig, loading } = useConfigurationEditorStore();
+    const {
+        projectConfig,
+        fetchProjectConfig,
+        loading,
+        projectType,
+    } = useConfigurationEditorStore();
     const [expanded, setExpanded] = useState<boolean>(true);
-    // const [projectTypeLabel, setProjectTypeLabel] = useState<string>('');
 
     const configId = '36e20bb4-aa8e-4ee6-8c10-dddd26b6e76a';
 
     useEffect(() => {
         if (!projectConfig && configId) {
             fetchProjectConfig(configId);
-            // setProjectTypeLabel(`Project Type: ${ProjectType[result.Type]}`);
         }
     }, [projectConfig, fetchProjectConfig, configId]);
 
@@ -23,7 +26,7 @@ const ConfigurationEditor : React.FC = () => {
                 expanded={expanded}
                 projectEntities={projectConfig?.Entities || []}
                 loading={loading}
-                projectType="Relational"
+                projectType={`Project Type ${projectType}`}
             />
             <EditorPanel
                 expanded={expanded}

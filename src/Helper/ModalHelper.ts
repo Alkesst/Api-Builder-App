@@ -1,17 +1,17 @@
-import { AttributeType } from 'api-builder-types';
-import { AttributeChangeHandlerRow, ModalInputRow } from '../Types/ViewTypes';
+import { AttributeType, IAttribute } from 'api-builder-types';
+import { ModalInputRow } from '../Types/ViewTypes';
 
 export const fromAttributeToModalInputRow = (
-    attributeRow: AttributeChangeHandlerRow,
+    attributeRow: IAttribute,
 ): ModalInputRow => ({
-    id: attributeRow.attribute.Identifier,
-    inputType: attributeRow.attribute.Type,
-    label: attributeRow.attribute.Name,
-    inputOnChangeHandler: attributeRow.onChangeHandler,
-    typeOnChangeHandler: attributeRow.typeOnChangeHandler,
-    dropdownValue: AttributeType[attributeRow.attribute.Type],
+    id: attributeRow.Identifier,
+    inputType: attributeRow.Type,
+    label: attributeRow.Name,
+    // inputOnChangeHandler: attributeRow.onChangeHandler,
+    // typeOnChangeHandler: attributeRow.typeOnChangeHandler,
+    dropdownValue: AttributeType[attributeRow.Type],
 });
 
 export const fromAttributesToModalInputRows = (
-    entries: AttributeChangeHandlerRow[],
+    entries: IAttribute[],
 ) => entries.map((element) => fromAttributeToModalInputRow(element));

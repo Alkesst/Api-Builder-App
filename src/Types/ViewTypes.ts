@@ -12,9 +12,9 @@ export interface EntityReference {
 export interface ModalInputRow {
     label: string;
     inputType: AttributeType;
-    inputOnChangeHandler: StateSetterCallback;
+    // inputOnChangeHandler: StateSetterCallback;
     dropdownValue: string;
-    typeOnChangeHandler: StateSetterCallback;
+    // typeOnChangeHandler: StateSetterCallback;
     id: string;
 }
 

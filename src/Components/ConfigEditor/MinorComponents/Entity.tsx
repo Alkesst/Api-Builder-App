@@ -35,7 +35,7 @@ const Entity : React.FC<IEntityProps> = (
                 Identifier={item.Identifier}
                 DefaultValue={null}
                 Precision={null}
-                // entityId={Identifier}
+                entityId={Identifier}
                 IsNullable
             />
         ))

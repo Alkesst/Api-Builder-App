@@ -1,11 +1,14 @@
 import create from 'zustand';
 import { devtools } from 'zustand/middleware';
-import { IAttribute, IEntity, IProjectConfig } from 'api-builder-types';
+import {
+    IAttribute, IEntity, IProjectConfig, ProjectType,
+} from 'api-builder-types';
 import { StateSetterCallback } from '../../Types/ViewTypes';
 import { getProject } from '../../Helper/Retriever';
 
 interface ConfigurationEditorStore {
     projectConfig?: IProjectConfig,
+    projectType?: string;
     fetchProjectConfig: StateSetterCallback;
     loading: boolean;
     setLoading: StateSetterCallback;
@@ -55,10 +58,11 @@ export const useConfigurationEditorStore = create<ConfigurationEditorStore>(devt
     (set, get) => ({
         projectConfig: undefined,
         loading: true,
+        projectType: undefined,
         setLoading: (newValue: boolean) => set({ loading: newValue }),
         fetchProjectConfig: async (id: string) => {
             const response = await getProject(id);
-            set({ projectConfig: response });
+            set({ projectConfig: response, projectType: ProjectType[response.Type] });
             useEntityStore.getState().setEntities(response.Entities);
             get().setLoading(false);
         },
