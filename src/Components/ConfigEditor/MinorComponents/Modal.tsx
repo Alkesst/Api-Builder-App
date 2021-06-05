@@ -15,8 +15,8 @@ const Modal: React.FC<ModalProps> = ({ showing, setShowing, modalRows } : ModalP
     const computeModalRows = useMemo(() => modalRows.map((row: ModalInputRow) => (
         <div key={`modal-row-${row.id}`}>
             <label htmlFor={`input-${row.id}`}>
-                <input id={`input-${row.id}`} value={row.label} />
-
+                <input id={`input-name-${row.id}`} value={row.label} />
+                <input id={`input-type-${row.id}`} value={row.dropdownValue} />
             </label>
         </div>
     )), [modalRows]);
