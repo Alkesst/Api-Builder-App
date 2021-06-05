@@ -13,6 +13,7 @@ export interface ModalInputRow {
     label: string;
     inputType: AttributeType;
     inputOnChangeHandler: StateSetterCallback;
+    dropdownValue: string;
     typeOnChangeHandler: StateSetterCallback;
     id: string;
 }

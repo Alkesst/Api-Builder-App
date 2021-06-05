@@ -10,19 +10,19 @@ import { EntityReference, ModalInputRow } from '../../Types/ViewTypes';
 import Relationship from './MinorComponents/Relationship';
 import 'Styles/ConfigEditor/Modal.scss';
 import Modal from './MinorComponents/Modal';
-import useStoreGrid from '../Stores/GridStore';
 import { fromAttributesToModalInputRows } from '../../Helper/ModalHelper';
+import { useStoreGrid } from '../Stores/GridStore';
 
 interface IGridProps {
     expanded: boolean;
     projectEntities: IEntity[];
-    loaded: boolean;
+    loading: boolean;
     projectType: string;
 }
 
 const Grid : React.FC<IGridProps> = (
     {
-        expanded, projectEntities, loaded, projectType,
+        expanded, projectEntities, loading, projectType,
     }
     : IGridProps,
 ) => {
@@ -96,7 +96,7 @@ const Grid : React.FC<IGridProps> = (
         <div className={`Grid-Color ${(expanded) ? 'Expanded' : ''}`}>
             {projectType}
             <Modal showing={edit} setShowing={setEdit} modalRows={modalRows} />
-            {loaded && generateEntities}
+            {!loading && generateEntities}
             {entityRelationships}
         </div>
     );

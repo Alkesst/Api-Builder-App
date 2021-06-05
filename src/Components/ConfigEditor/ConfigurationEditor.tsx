@@ -1,43 +1,34 @@
 import React, { useEffect, useState } from 'react';
 import 'Styles/ConfigEditor/Grid.scss';
 import { EditorPanel, Grid } from 'Components';
-import { IEntity, IProjectConfig, ProjectType } from 'api-builder-types';
-import { getProject } from '../../Helper/Retriever';
+import { useConfigurationEditorStore } from '../Stores/GridStore';
 
 const ConfigurationEditor : React.FC = () => {
-    const [, setProjectConfig] = useState<IProjectConfig>();
-    const [projectEntities, setProjectEntities] = useState<IEntity[]>();
+    const { projectConfig, fetchProjectConfig, loading } = useConfigurationEditorStore();
     const [expanded, setExpanded] = useState<boolean>(true);
-    const [loaded, setLoaded] = useState<boolean>(false);
-    const [projectTypeLabel, setProjectTypeLabel] = useState<string>('');
+    // const [projectTypeLabel, setProjectTypeLabel] = useState<string>('');
 
-    const configId = 10;
+    const configId = '36e20bb4-aa8e-4ee6-8c10-dddd26b6e76a';
 
     useEffect(() => {
-        if (!projectEntities && configId) {
-            setLoaded(false);
-            getProject()
-                .then((result: IProjectConfig) => {
-                    setProjectConfig(result);
-                    setProjectEntities(result.Entities);
-                    setLoaded(true);
-                    setProjectTypeLabel(`Project Type: ${ProjectType[result.Type]}`);
-                });
+        if (!projectConfig && configId) {
+            fetchProjectConfig(configId);
+            // setProjectTypeLabel(`Project Type: ${ProjectType[result.Type]}`);
         }
-    }, [projectEntities, configId]);
+    }, [projectConfig, fetchProjectConfig, configId]);
 
     return (
         <div className="App-Background-Height Grid">
             <Grid
                 expanded={expanded}
-                projectEntities={projectEntities || []}
-                loaded={loaded}
-                projectType={projectTypeLabel}
+                projectEntities={projectConfig?.Entities || []}
+                loading={loading}
+                projectType="Relational"
             />
             <EditorPanel
                 expanded={expanded}
                 setExpanded={setExpanded}
-                projectEntities={projectEntities || []}
+                projectEntities={projectConfig?.Entities || []}
             />
         </div>
     );
