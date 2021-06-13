@@ -9,25 +9,23 @@ import { hasRelationships, getEntityReference } from '../../Helper/RelationshipH
 import { EntityReference } from '../../Types/ViewTypes';
 import Relationship from './MinorComponents/Relationship';
 import 'Styles/ConfigEditor/Modal.scss';
-import Modal from './MinorComponents/Modal';
 
 interface IGridProps {
     expanded: boolean;
     projectEntities: IEntity[];
     loading: boolean;
     projectType: string;
+    setEntityId: (newValue: string) => void;
+    setEdit: (value: boolean) => void;
 }
 
 const Grid : React.FC<IGridProps> = (
     {
-        expanded, projectEntities, loading, projectType,
+        expanded, projectEntities, loading, projectType, setEntityId, setEdit,
     }
     : IGridProps,
 ) => {
     const [,setEntityBeingDragged] = useState<boolean>(false);
-    const [edit, setEdit] = useState<boolean>(false);
-    const [entityId, setEntityId] = useState<string>();
-
     const onEditHandler = useCallback((selectedEntityId: string) => {
         setEdit(true);
         setEntityId(selectedEntityId);
@@ -85,7 +83,6 @@ const Grid : React.FC<IGridProps> = (
     return (
         <div className={`Grid-Color ${(expanded) ? 'Expanded' : ''}`}>
             {projectType}
-            {entityId && <Modal showing={edit} setShowing={setEdit} entityId={entityId} />}
             {!loading && generateEntities}
             {entityRelationships}
         </div>

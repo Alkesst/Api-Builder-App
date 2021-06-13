@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import 'Styles/ConfigEditor/Grid.scss';
 import { EditorPanel, Grid } from 'Components';
 import { useConfigurationEditorStore } from '../Stores/ConfigEditorStore';
+import Modal from './MinorComponents/Modal';
 
 const ConfigurationEditor : React.FC = () => {
     const {
@@ -11,8 +12,17 @@ const ConfigurationEditor : React.FC = () => {
         projectType,
     } = useConfigurationEditorStore();
     const [expanded, setExpanded] = useState<boolean>(true);
+    const [edit, setEdit] = useState<boolean>(false);
+    const [entityId, setEntityId] = useState<string>();
 
     const configId = '36e20bb4-aa8e-4ee6-8c10-dddd26b6e76a';
+
+    const setEntityCallback = useCallback(
+        (selectedEntityId: string) => setEntityId(selectedEntityId),
+        [setEntityId],
+    );
+
+    const setEditCallback = (value: boolean) => setEdit(value);
 
     useEffect(() => {
         if (!projectConfig && configId) {
@@ -22,16 +32,21 @@ const ConfigurationEditor : React.FC = () => {
 
     return (
         <div className="App-Background-Height Grid">
+            {entityId && <Modal showing={edit} setShowing={setEdit} entityId={entityId} />}
             <Grid
                 expanded={expanded}
                 projectEntities={projectConfig?.Entities || []}
                 loading={loading}
                 projectType={`Project Type ${projectType}`}
+                setEntityId={setEntityCallback}
+                setEdit={setEditCallback}
             />
             <EditorPanel
                 expanded={expanded}
                 setExpanded={setExpanded}
                 projectEntities={projectConfig?.Entities || []}
+                setEntityId={setEntityCallback}
+                setEdit={setEditCallback}
             />
         </div>
     );

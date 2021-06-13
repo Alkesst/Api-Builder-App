@@ -7,12 +7,16 @@ interface IEditorPanelProps {
     expanded: boolean,
     setExpanded: (newValue: boolean) => void;
     projectEntities: IEntity[];
+    setEntityId: (newValue: string) => void;
+    setEdit: (value: boolean) => void;
 }
 
 const EditorPanel : React.FC<IEditorPanelProps> = ({
     expanded,
     setExpanded,
     projectEntities,
+    setEntityId,
+    setEdit,
 }: IEditorPanelProps) => {
     const expandHandler = () => {
         setExpanded(!expanded);
@@ -27,6 +31,11 @@ const EditorPanel : React.FC<IEditorPanelProps> = ({
         setButtonStyle((expanded) ? 'Expanded' : 'Hidden');
     }, [expanded, setExpanded]);
 
+    const handleClickEntity = (entityId: string) => {
+        setEntityId(entityId);
+        setEdit(true);
+    };
+
     return (
         <>
             <button className={`Grid-Expander Grid-Panel-${buttonStyle} btn btn-outline-light margin-bot-10`} type="button" onClick={expandHandler}>
@@ -36,9 +45,14 @@ const EditorPanel : React.FC<IEditorPanelProps> = ({
                 <div className="Panel-Color Content padding-5">
                     Project Entities:
                     {projectEntities.map((el) => (
-                        <div className="padding-5" key={`${el.Name}-panel-label`}>
+                        <button
+                            type="button"
+                            className="padding-5"
+                            key={`${el.Name}-panel-label`}
+                            onClick={() => handleClickEntity(el.Identifier)}
+                        >
                             {el.Name}
-                        </div>
+                        </button>
                     ))}
                 </div>
             </div>
