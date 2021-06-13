@@ -8,21 +8,30 @@ import Entity from './MinorComponents/Entity';
 import { hasRelationships, getEntityReference } from '../../Helper/RelationshipHelper';
 import { EntityReference } from '../../Types/ViewTypes';
 import Relationship from './MinorComponents/Relationship';
+import 'Styles/ConfigEditor/Modal.scss';
+import Modal from './MinorComponents/Modal';
 
 interface IGridProps {
     expanded: boolean;
     projectEntities: IEntity[];
-    loaded: boolean;
+    loading: boolean;
     projectType: string;
 }
 
 const Grid : React.FC<IGridProps> = (
     {
-        expanded, projectEntities, loaded, projectType,
+        expanded, projectEntities, loading, projectType,
     }
     : IGridProps,
 ) => {
     const [,setEntityBeingDragged] = useState<boolean>(false);
+    const [edit, setEdit] = useState<boolean>(false);
+    const [entityId, setEntityId] = useState<string>();
+
+    const onEditHandler = useCallback((selectedEntityId: string) => {
+        setEdit(true);
+        setEntityId(selectedEntityId);
+    }, [setEdit, setEntityId]);
 
     const entityRelationships = projectEntities.map((entity: IEntity) => (
         entity.Relationships.map((relationship: IRelationship) => (
@@ -66,21 +75,18 @@ const Grid : React.FC<IGridProps> = (
                 <Entity
                     key={entity.Identifier}
                     Identifier={entity.Identifier}
-                    Name={entity.Name}
-                    Relationships={entity.Relationships}
                     onDragHandler={onDragHandler}
-                    Attributes={entity.Attributes}
-                    Coordinates={entity.Coordinates}
-                    Constraints={entity.Constraints}
+                    onEditHandler={onEditHandler}
                 />
             </div>
         );
-    }), [onDragHandler, projectEntities, references]);
+    }), [onDragHandler, projectEntities, references, onEditHandler]);
 
     return (
         <div className={`Grid-Color ${(expanded) ? 'Expanded' : ''}`}>
             {projectType}
-            {loaded && generateEntities}
+            {entityId && <Modal showing={edit} setShowing={setEdit} entityId={entityId} />}
+            {!loading && generateEntities}
             {entityRelationships}
         </div>
     );

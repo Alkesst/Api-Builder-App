@@ -13,7 +13,7 @@ export const baseRequest = async<T> (route: string, config?: RequestInit): Promi
 
 export const retrieveProjects = async (): Promise<IProject[]> => baseRequest<IProject[]>('/projects');
 export const retrieveProjectConfig = async (): Promise<IEntity[]> => baseRequest<IEntity[]>('/projectConfig');
-export const getProject = async () : Promise<IProjectConfig> => baseRequest<IProjectConfig>('/projectConfig/36e20bb4-aa8e-4ee6-8c10-dddd26b6e76a');
+export const getProject = async (id: string) : Promise<IProjectConfig> => baseRequest<IProjectConfig>(`/projectConfig/${id}`);
 
 export const login = async (): Promise<void> => {
     const config: RequestInit = { method: 'POST' };
