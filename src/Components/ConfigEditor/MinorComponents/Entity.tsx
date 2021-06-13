@@ -1,21 +1,26 @@
 import React, {
-    useEffect, useRef, useState,
+    useEffect, useMemo, useRef, useState,
 } from 'react';
 import Draggable from 'react-draggable';
 import 'Styles/ConfigEditor/Entity.scss';
-import { IEntity } from 'api-builder-types/entity';
 import Attribute from './Attribute';
+import { useAttributeStore, useEntityStore } from '../../Stores/ConfigEditorStore';
 
-interface IEntityProps extends IEntity {
+interface IEntityProps {
+    Identifier: string;
     onDragHandler: (dragging: boolean) => void;
     onEditHandler: (entityId: string) => void;
 }
 
 const Entity : React.FC<IEntityProps> = (
     {
-        Identifier, Name, Coordinates, Attributes, onDragHandler, onEditHandler,
+        Identifier, onDragHandler, onEditHandler,
     }: IEntityProps,
 ) => {
+    const { getEntity } = useEntityStore();
+    const { getAttributesByEntityId } = useAttributeStore();
+    const { Name, Coordinates } = useMemo(() => getEntity(Identifier), [Identifier, getEntity])!!;
+    const Attributes = getAttributesByEntityId(Identifier);
     const nodeRef = useRef(null);
     const [expanded, setExpanded] = useState<boolean>(false);
 
@@ -35,7 +40,6 @@ const Entity : React.FC<IEntityProps> = (
                 Identifier={item.Identifier}
                 DefaultValue={null}
                 Precision={null}
-                entityId={Identifier}
                 IsNullable
             />
         ))

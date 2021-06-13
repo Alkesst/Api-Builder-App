@@ -16,6 +16,7 @@ export interface ModalInputRow {
     dropdownValue: string;
     // typeOnChangeHandler: StateSetterCallback;
     id: string;
+    entityId: string;
 }
 
 export interface AttributeChangeHandlerRow {

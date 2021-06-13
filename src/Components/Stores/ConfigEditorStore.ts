@@ -17,31 +17,75 @@ interface ConfigurationEditorStore {
 interface EntityStore {
     entities: IEntity[],
     setEntities: StateSetterCallback;
+    getEntity: (entityId: string) => IEntity | undefined;
 }
 
 interface AttributeStore {
-    attributesMatrix: AttributesStoreStructure[];
+    attributes: { [key: string]: AttributesStoreStructure};
     appendAttributes: (entityId: string, attributes: IAttribute[]) => void;
+    update: (
+        entityId: string,
+        attributeId: string
+    ) => (fieldName: keyof IAttribute, newValue: string) => void;
+    getAttributesByEntityId: (entityId: string) => IAttribute[];
 }
 
 export interface AttributesStoreStructure {
-    entityId: string;
     attributes: IAttribute[];
     saving: boolean;
 }
 
 export const useAttributeStore = create<AttributeStore>(devtools(
-    (set) => ({
-        attributesMatrix: [],
-        appendAttributes: (entityId, attributes) => set((state) => ({
-            attributesMatrix: [...state.attributesMatrix,
-                { entityId, attributes, saving: false }],
-        })),
+    (set, get) => ({
+        attributes: {},
+        appendAttributes: (entityId: string, attributes: IAttribute[]) => {
+            set((state) => ({
+                attributes: {
+                    ...state.attributes,
+                    [entityId]: {
+                        attributes: [
+                            ...(state.attributes[entityId]?.attributes || []), ...attributes,
+                        ],
+                        saving: false,
+                    },
+                },
+            }));
+        },
+        update: (
+            entityId: string,
+            attributeId: string,
+        ) => (
+            (fieldName: keyof IAttribute, newValue: string) => {
+                const { attributes } = get().attributes[entityId];
+                const attributeToUpdateIndex = attributes.findIndex(
+                    (attribute) => attribute.Identifier === attributeId,
+                );
+                if (attributeToUpdateIndex === -1) return;
+                const slice1 = attributes.slice(0, attributeToUpdateIndex);
+                const slice2 = attributes.slice(attributeToUpdateIndex + 1);
+                const attributeToUpdate = {
+                    ...attributes[attributeToUpdateIndex],
+                    [fieldName]: newValue,
+                };
+                set((state) => ({
+                    attributes: {
+                        ...state.attributes,
+                        [entityId]: {
+                            attributes: [...slice1, attributeToUpdate, ...slice2],
+                            saving: false,
+                        },
+                    },
+                }));
+            }
+        ),
+        getAttributesByEntityId: (entityId: string) => (
+            get().attributes[entityId].attributes
+        ),
     }),
 ));
 
 export const useEntityStore = create<EntityStore>(devtools(
-    (set) => ({
+    (set, get) => ({
         entities: [],
         setEntities: (newValue: IEntity[]) => {
             set({ entities: newValue });
@@ -51,6 +95,9 @@ export const useEntityStore = create<EntityStore>(devtools(
                     entity.Attributes,
                 ));
         },
+        getEntity: (entityId: string) => (
+            get().entities.find((entity) => entity.Identifier === entityId)
+        ),
     }),
 ));
 

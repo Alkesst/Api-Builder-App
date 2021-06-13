@@ -6,13 +6,10 @@ import { IEntity } from 'api-builder-types';
 import { IRelationship } from 'api-builder-types/relationship';
 import Entity from './MinorComponents/Entity';
 import { hasRelationships, getEntityReference } from '../../Helper/RelationshipHelper';
-import { EntityReference, ModalInputRow } from '../../Types/ViewTypes';
+import { EntityReference } from '../../Types/ViewTypes';
 import Relationship from './MinorComponents/Relationship';
 import 'Styles/ConfigEditor/Modal.scss';
 import Modal from './MinorComponents/Modal';
-import { fromAttributesToModalInputRows } from '../../Helper/ModalHelper';
-import { useEntityStore } from '../Stores/ConfigEditorStore';
-// import { fromAttributesToModalInputRows } from '../../Helper/ModalHelper';
 
 interface IGridProps {
     expanded: boolean;
@@ -27,17 +24,14 @@ const Grid : React.FC<IGridProps> = (
     }
     : IGridProps,
 ) => {
-    const { entities } = useEntityStore();
     const [,setEntityBeingDragged] = useState<boolean>(false);
     const [edit, setEdit] = useState<boolean>(false);
-    const [modalRows, setModalRows] = useState<ModalInputRow[]>([]);
+    const [entityId, setEntityId] = useState<string>();
 
-    const onEditHandler = useCallback((entityId: string) => {
-        const currentEntity = entities.find((entity) => entity.Identifier === entityId);
-        const modalRowsTemp = fromAttributesToModalInputRows(currentEntity?.Attributes!!);
-        setModalRows(modalRowsTemp);
+    const onEditHandler = useCallback((selectedEntityId: string) => {
         setEdit(true);
-    }, [entities]);
+        setEntityId(selectedEntityId);
+    }, [setEdit, setEntityId]);
 
     const entityRelationships = projectEntities.map((entity: IEntity) => (
         entity.Relationships.map((relationship: IRelationship) => (
@@ -81,12 +75,7 @@ const Grid : React.FC<IGridProps> = (
                 <Entity
                     key={entity.Identifier}
                     Identifier={entity.Identifier}
-                    Name={entity.Name}
-                    Relationships={entity.Relationships}
                     onDragHandler={onDragHandler}
-                    Attributes={entity.Attributes}
-                    Coordinates={entity.Coordinates}
-                    Constraints={entity.Constraints}
                     onEditHandler={onEditHandler}
                 />
             </div>
@@ -96,7 +85,7 @@ const Grid : React.FC<IGridProps> = (
     return (
         <div className={`Grid-Color ${(expanded) ? 'Expanded' : ''}`}>
             {projectType}
-            <Modal showing={edit} setShowing={setEdit} modalRows={modalRows} />
+            {entityId && <Modal showing={edit} setShowing={setEdit} entityId={entityId} />}
             {!loading && generateEntities}
             {entityRelationships}
         </div>
