@@ -30,7 +30,7 @@ const Project: React.FC<ProjectViewProps> = ({
                             aria-controls="example-collapse-text"
                             aria-expanded={open}
                         >
-                            <FontAwesomeIcon icon={(open) ? faAngleDown : faAngleUp} />
+                            <FontAwesomeIcon icon={(!open) ? faAngleDown : faAngleUp} />
                         </Button>
                     </Col>
                 </Row>

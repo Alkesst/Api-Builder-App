@@ -22,6 +22,8 @@
   width: 100vw;
   margin-left: 38px;
   transition: all 250ms linear;
+  position: relative;
+  overflow: auto;
 }
 
 .Grid-Color.Expanded {
