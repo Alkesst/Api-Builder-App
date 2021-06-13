@@ -3,8 +3,12 @@ import React, {
 } from 'react';
 import Draggable from 'react-draggable';
 import 'Styles/ConfigEditor/Entity.scss';
-import Attribute from './Attribute';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faAngleDown, faAngleUp, faPencilAlt } from '@fortawesome/free-solid-svg-icons';
+import Button from 'react-bootstrap/cjs/Button';
+import Collapse from 'react-bootstrap/cjs/Collapse';
 import { useAttributeStore, useEntityStore } from '../../Stores/ConfigEditorStore';
+import Attribute from './Attribute';
 
 interface IEntityProps {
     Identifier: string;
@@ -32,17 +36,21 @@ const Entity : React.FC<IEntityProps> = (
     };
 
     const computeAttributes = () => (
-        Attributes.map((item) => (
-            <Attribute
-                key={item.Identifier}
-                Name={item.Name}
-                Type={item.Type}
-                Identifier={item.Identifier}
-                DefaultValue={null}
-                Precision={null}
-                IsNullable
-            />
-        ))
+        <Collapse in={expanded}>
+            <div>
+                {Attributes.map((item) => (
+                    <Attribute
+                        key={item.Identifier}
+                        Name={item.Name}
+                        Type={item.Type}
+                        Identifier={item.Identifier}
+                        DefaultValue={null}
+                        Precision={null}
+                        IsNullable
+                    />
+                ))}
+            </div>
+        </Collapse>
     );
 
     return (
@@ -55,12 +63,27 @@ const Entity : React.FC<IEntityProps> = (
                 onStop={() => onDragHandler(false)}
             >
                 <div ref={nodeRef} id={Identifier} className="padding-10">
-                    {Name}
-                    <button onClick={expandHandler} type="button">
-                        Expand
-                    </button>
-                    {(expanded) ? <button type="button" onClick={() => onEditHandler(Identifier)}>Edit</button> : <> </>}
-                    {(expanded) ? computeAttributes() : <> </>}
+                    <div className="flex justify-content-between align-items-center">
+                        {Name}
+                        <Button
+                            onClick={expandHandler}
+                            aria-controls="example-collapse-text"
+                            aria-expanded={expanded}
+                            className="btn btn-outline-light"
+                        >
+                            <FontAwesomeIcon icon={(!expanded) ? faAngleDown : faAngleUp} />
+                        </Button>
+                    </div>
+                    {expanded && (
+                        <button
+                            className="btn btn-outline-light"
+                            type="button"
+                            onClick={() => onEditHandler(Identifier)}
+                        >
+                            <FontAwesomeIcon icon={faPencilAlt} />
+                        </button>
+                    )}
+                    {computeAttributes()}
                 </div>
             </Draggable>
         </div>

@@ -21,7 +21,7 @@
   color: gainsboro;
   width: 100vw;
   margin-left: 38px;
-  transition: all 250ms linear;
+  transition: all 250ms ease-in-out;
   position: relative;
   overflow: auto;
 }

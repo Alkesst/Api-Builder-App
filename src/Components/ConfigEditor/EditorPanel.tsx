@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons';
 import { IEntity } from 'api-builder-types';
+import EntitySidePanel from './MinorComponents/EntitySidePanel';
 
 interface IEditorPanelProps {
     expanded: boolean,
@@ -31,11 +32,6 @@ const EditorPanel : React.FC<IEditorPanelProps> = ({
         setButtonStyle((expanded) ? 'Expanded' : 'Hidden');
     }, [expanded, setExpanded]);
 
-    const handleClickEntity = (entityId: string) => {
-        setEntityId(entityId);
-        setEdit(true);
-    };
-
     return (
         <>
             <button className={`Grid-Expander Grid-Panel-${buttonStyle} btn btn-outline-light margin-bot-10`} type="button" onClick={expandHandler}>
@@ -45,14 +41,13 @@ const EditorPanel : React.FC<IEditorPanelProps> = ({
                 <div className="Panel-Color Content padding-5">
                     Project Entities:
                     {projectEntities.map((el) => (
-                        <button
-                            type="button"
-                            className="padding-5"
-                            key={`${el.Name}-panel-label`}
-                            onClick={() => handleClickEntity(el.Identifier)}
-                        >
-                            {el.Name}
-                        </button>
+                        <EntitySidePanel
+                            hidden={!expanded}
+                            key={`side-panel-${el.Identifier}`}
+                            entityId={el.Identifier}
+                            setEntityId={setEntityId}
+                            setEdit={setEdit}
+                        />
                     ))}
                 </div>
             </div>
