@@ -15,6 +15,14 @@ const Modal: React.FC<ModalProps> = ({ showing, setShowing, entityId } : ModalPr
         setShowing(false);
     };
 
+    const computeAttributeTypeElements = useMemo(() => (
+        Object.keys(AttributeType).filter((el) => Number.isNaN(+el)).map((key) => (
+            <option key={key} value={AttributeType[key as any]}>
+                {key}
+            </option>
+        ))
+    ), []);
+
     const computeModalRows = useMemo(() => modalRows.map((row: IAttribute) => (
         <div key={`modal-row-${row.Identifier}`}>
             <label htmlFor={`input-${row.Identifier}`}>
@@ -23,14 +31,16 @@ const Modal: React.FC<ModalProps> = ({ showing, setShowing, entityId } : ModalPr
                     value={row.Name}
                     onChange={(event) => update(entityId, row.Identifier)('Name', event.target.value)}
                 />
-                <input
+                <select
                     id={`input-type-${row.Identifier}`}
-                    value={AttributeType[row.Type]}
-                    onChange={(event) => update(entityId, row.Identifier)('Type', event.target.value)}
-                />
+                    value={row.Type}
+                    onChange={(event) => update(entityId, row.Identifier)('Type', +event.target.value)}
+                >
+                    {computeAttributeTypeElements}
+                </select>
             </label>
         </div>
-    )), [update, modalRows, entityId]);
+    )), [update, modalRows, entityId, computeAttributeTypeElements]);
 
     return (
         <div className={`modal-edit display-${showing ? 'block' : 'none'}`}>

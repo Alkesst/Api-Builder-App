@@ -26,7 +26,7 @@ interface AttributeStore {
     update: (
         entityId: string,
         attributeId: string
-    ) => (fieldName: keyof IAttribute, newValue: string) => void;
+    ) => <T extends keyof IAttribute>(fieldName: T, newValue: IAttribute[T]) => void;
     getAttributesByEntityId: (entityId: string) => IAttribute[];
 }
 
@@ -55,7 +55,7 @@ export const useAttributeStore = create<AttributeStore>(devtools(
             entityId: string,
             attributeId: string,
         ) => (
-            (fieldName: keyof IAttribute, newValue: string) => {
+            <T extends keyof IAttribute>(fieldName: T, newValue: IAttribute[T]) => {
                 const { attributes } = get().attributes[entityId];
                 const attributeToUpdateIndex = attributes.findIndex(
                     (attribute) => attribute.Identifier === attributeId,
