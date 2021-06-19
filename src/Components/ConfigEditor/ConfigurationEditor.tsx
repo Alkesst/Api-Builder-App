@@ -35,7 +35,6 @@ const ConfigurationEditor : React.FC = () => {
             {entityId && <Modal showing={edit} setShowing={setEdit} entityId={entityId} />}
             <Grid
                 expanded={expanded}
-                projectEntities={projectConfig?.Entities || []}
                 loading={loading}
                 projectType={`Project Type ${projectType}`}
                 setEntityId={setEntityCallback}

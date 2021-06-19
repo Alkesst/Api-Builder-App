@@ -12,12 +12,14 @@ interface ConfigurationEditorStore {
     fetchProjectConfig: StateSetterCallback;
     loading: boolean;
     setLoading: StateSetterCallback;
+    getEntitiesByProject: () => IEntity[] | undefined;
 }
 
 interface EntityStore {
     entities: IEntity[],
     setEntities: StateSetterCallback;
     getEntity: (entityId: string) => IEntity | undefined;
+    addEmptyNewEntity: () => void;
 }
 
 interface AttributeStore {
@@ -79,7 +81,7 @@ export const useAttributeStore = create<AttributeStore>(devtools(
             }
         ),
         getAttributesByEntityId: (entityId: string) => (
-            get().attributes[entityId].attributes
+            get().attributes[entityId]?.attributes
         ),
     }),
 ));
@@ -98,6 +100,18 @@ export const useEntityStore = create<EntityStore>(devtools(
         getEntity: (entityId: string) => (
             get().entities.find((entity) => entity.Identifier === entityId)
         ),
+        addEmptyNewEntity: () => {
+            set((state) => ({
+                entities: [...state.entities, ...[{
+                    Name: 'New Entity',
+                    Relationships: [],
+                    Constraints: [],
+                    Coordinates: { X: 0, Y: 0 },
+                    Identifier: 'NewEntity',
+                    Attributes: [],
+                }]],
+            }));
+        },
     }),
 ));
 
@@ -113,5 +127,6 @@ export const useConfigurationEditorStore = create<ConfigurationEditorStore>(devt
             useEntityStore.getState().setEntities(response.Entities);
             get().setLoading(false);
         },
+        getEntitiesByProject: (() => get().projectConfig?.Entities),
     }),
 ));

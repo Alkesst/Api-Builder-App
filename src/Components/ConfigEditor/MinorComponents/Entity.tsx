@@ -38,7 +38,7 @@ const Entity : React.FC<IEntityProps> = (
     const computeAttributes = () => (
         <Collapse in={expanded}>
             <div>
-                {Attributes.map((item) => (
+                {Attributes?.map((item) => (
                     <Attribute
                         key={item.Identifier}
                         Name={item.Name}
