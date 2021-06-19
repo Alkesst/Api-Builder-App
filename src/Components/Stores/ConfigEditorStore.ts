@@ -103,11 +103,11 @@ export const useEntityStore = create<EntityStore>(devtools(
         addEmptyNewEntity: () => {
             set((state) => ({
                 entities: [...state.entities, ...[{
-                    Name: 'New Entity',
+                    Name: `New Entity ${get().entities.length}`,
                     Relationships: [],
                     Constraints: [],
                     Coordinates: { X: 0, Y: 0 },
-                    Identifier: 'NewEntity',
+                    Identifier: `NewEntity-${get().entities.length}`,
                     Attributes: [],
                 }]],
             }));

@@ -27,7 +27,7 @@ const Modal: React.FC<ModalProps> = ({ showing, setShowing, entityId } : ModalPr
         ))
     ), []);
 
-    const computeModalRows = useMemo(() => modalRows.map((row: IAttribute) => (
+    const computeModalRows = useMemo(() => modalRows?.map((row: IAttribute) => (
         <div key={`modal-row-${row.Identifier}`} className="flex justify-content-between align-items-center">
             <label htmlFor={`input-${row.Identifier}`}>
                 <input
