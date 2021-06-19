@@ -49,3 +49,24 @@
     transform: rotate(360deg);
   }
 }
+
+Button.btn {
+  background-color: transparent;
+  height: 35px;
+  width: 35px;
+  font-size: 0.75rem;
+}
+
+input {
+  border-radius: 3px;
+  background: #282c34;
+  color: white;
+  border-color: lightgrey;
+}
+
+select {
+  border-radius: 3px;
+  background: #282c34;
+  color: white;
+  border-color: lightgrey;
+}

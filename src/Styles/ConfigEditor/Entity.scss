@@ -1,4 +1,14 @@
 .Entity {
-  width: fit-content;
+  width: 15rem;
   cursor: default;
+}
+
+.entity.side-panel {
+  padding-right: 1rem;
+  padding-left: 1rem;
+  transition: visibility 250ms;
+}
+
+.entity.side-panel.hidden {
+  visibility: hidden;
 }
