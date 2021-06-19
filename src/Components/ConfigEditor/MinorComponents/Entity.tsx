@@ -64,7 +64,9 @@ const Entity : React.FC<IEntityProps> = (
             >
                 <div ref={nodeRef} id={Identifier} className="padding-10">
                     <div className="flex justify-content-between align-items-center">
-                        {Name}
+                        <div className="header">
+                            {Name}
+                        </div>
                         <div className="btn-group">
                             <button
                                 className="btn btn-outline-light"
