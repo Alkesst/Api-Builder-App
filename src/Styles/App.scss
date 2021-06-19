@@ -61,6 +61,11 @@ Button.btn {
   border: 1px solid rgba(white, 0.4);
 }
 
+.btn.btn-outline-light:focus {
+  background: rgba(white, 0.75);
+  color: black;
+}
+
 input {
   border-radius: 3px;
   background: #282c34;
