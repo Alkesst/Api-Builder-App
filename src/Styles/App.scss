@@ -57,6 +57,10 @@ Button.btn {
   font-size: 0.75rem;
 }
 
+.btn.btn-outline-light {
+  border: 1px solid rgba(white, 0.4);
+}
+
 input {
   border-radius: 3px;
   background: #282c34;
