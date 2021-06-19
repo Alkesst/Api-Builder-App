@@ -5,7 +5,7 @@ interface IAttributeProps extends IAttribute {
 }
 
 const Attribute : React.FC<IAttributeProps> = ({ Name, Type }: IAttributeProps) => (
-    <div className="flex content-space-between padding-sides-5">
+    <div className="flex content-space-between padding-sides-5 padding-top-5">
         <div>
             {Name}
         </div>

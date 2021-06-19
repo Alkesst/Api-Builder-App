@@ -50,7 +50,7 @@ const EntitySidePanel: React.FC<EntitySidePanelProps> = (
     };
 
     return (
-        <div className={`padding-top-5 entity side-panel ${(hidden) ? 'hidden' : ''}`}>
+        <div className={`padding-top-5 entity side-panel ${(hidden) ? 'hidden' : ''} padding-bot-10`}>
             {entity && (
                 <div className="flex align-items-center justify-content-between padding-bot-5">
                     <div>

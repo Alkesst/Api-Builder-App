@@ -65,24 +65,24 @@ const Entity : React.FC<IEntityProps> = (
                 <div ref={nodeRef} id={Identifier} className="padding-10">
                     <div className="flex justify-content-between align-items-center">
                         {Name}
-                        <Button
-                            onClick={expandHandler}
-                            aria-controls="example-collapse-text"
-                            aria-expanded={expanded}
-                            className="btn btn-outline-light"
-                        >
-                            <FontAwesomeIcon icon={(!expanded) ? faAngleDown : faAngleUp} />
-                        </Button>
+                        <div className="btn-group">
+                            <button
+                                className="btn btn-outline-light"
+                                type="button"
+                                onClick={() => onEditHandler(Identifier)}
+                            >
+                                <FontAwesomeIcon icon={faPencilAlt} />
+                            </button>
+                            <Button
+                                onClick={expandHandler}
+                                aria-controls="example-collapse-text"
+                                aria-expanded={expanded}
+                                className="btn btn-outline-light"
+                            >
+                                <FontAwesomeIcon icon={(!expanded) ? faAngleDown : faAngleUp} />
+                            </Button>
+                        </div>
                     </div>
-                    {expanded && (
-                        <button
-                            className="btn btn-outline-light"
-                            type="button"
-                            onClick={() => onEditHandler(Identifier)}
-                        >
-                            <FontAwesomeIcon icon={faPencilAlt} />
-                        </button>
-                    )}
                     {computeAttributes()}
                 </div>
             </Draggable>
