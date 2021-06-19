@@ -1,6 +1,8 @@
 .Entity {
   width: 15rem;
   cursor: default;
+  border: solid 1px white;
+  border-radius: 3px;
 }
 
 .entity.side-panel {
