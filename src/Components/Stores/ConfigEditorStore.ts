@@ -21,7 +21,7 @@ interface EntityStore {
     setEntities: StateSetterCallback;
     getEntity: (entityId: string) => IEntity | undefined;
     addEmptyNewEntity: () => void;
-    setAttributePK: (attributeId: string, isAddition: boolean) => void;
+    setAttributePK: (attributeId: string, entityId: string, isAddition: boolean) => void;
     getEntityPKs: (entityId: string) => string[];
 }
 
@@ -85,12 +85,12 @@ export const useAttributeStore = create<AttributeStore>(devtools(
             get().attributes[entityId]?.attributes
         ),
         addEmptyNewAttribute: (entityId: string) => {
-            const { attributes } = get()?.attributes[entityId];
+            const attributes = get().attributes?.[entityId];
             set((state) => ({
                 attributes: {
                     ...state.attributes,
                     [entityId]: {
-                        attributes: [...attributes, ...[createEmptyAttribute()]],
+                        attributes: [...attributes?.attributes || [], ...[createEmptyAttribute()]],
                         saving: false,
                     },
                 },
@@ -132,8 +132,23 @@ export const useEntityStore = create<EntityStore>(devtools(
                 entities: [...state.entities, ...[createEmptyEntity(get().entities.length)]],
             }));
         },
-        setAttributePK: (attributeId: string, isAddition: boolean) => {
-            // jeje
+        setAttributePK: (attributeId: string, entityId: string, isAddition: boolean) => {
+            const entityIndex = get().entities.findIndex((el) => el.Identifier === entityId);
+            const entity = get().entities[entityIndex];
+            const entities1 = get().entities.slice(0, entityIndex);
+            const entities2 = get().entities.slice(entityIndex + 1);
+            if(isAddition) {
+                set(() => ({
+                    entities: [...entities1, {...entity, PK: [...entity.PK, attributeId]}, ...entities2]
+                }))
+            } else {
+                const indexAttr = entity.PK.findIndex((el) => el === attributeId);
+                const slice1 = entity.PK.slice(0, indexAttr);
+                const slice2 = entity.PK.slice(indexAttr + 1);
+                set(() => ({
+                    entities: [...entities1, {...entity, PK: [...slice1, ...slice2]}, ...entities2]
+                }))
+            }
         },
         getEntityPKs: (entityId: string) => {
             const entity = get().getEntity(entityId);

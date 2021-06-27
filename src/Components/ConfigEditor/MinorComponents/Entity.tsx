@@ -49,7 +49,7 @@ const Entity : React.FC<IEntityProps> = (
                         DefaultValue={null}
                         Precision={null}
                         isPK={isAttributePK(pks, item.Identifier)}
-                        IsNullable
+                        IsMandatory={item.IsMandatory}
                     />
                 ))}
             </div>

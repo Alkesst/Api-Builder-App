@@ -42,10 +42,10 @@ const Modal: React.FC<ModalProps> = ({ showing, setShowing, entityId } : ModalPr
                 />
             </label>
             <div className="text-white">   
-                Is Primary Key? <input type="checkbox" checked={isAttributePKCallback(row.Identifier)} onChange={(e) => setAttributePK(row.Identifier, e.target.checked)}/>
+                Is Primary Key? <input type="checkbox" checked={isAttributePKCallback(row.Identifier)} onChange={(e) => setAttributePK(row.Identifier, entityId, e.target.checked)}/>
             </div>
             <div className="text-white">   
-                Is Nullable? <input type="checkbox" checked={row.IsNullable} onChange={(e) => setAttributePK(row.Identifier, e.target.checked)}/>
+                Is Mandatory? <input type="checkbox" checked={row.IsMandatory} onChange={(e) => update(entityId, row.Identifier)('IsMandatory', e.target.checked)}/>
             </div>
             <div className="flex select-btn-group btn-group">
                 <select

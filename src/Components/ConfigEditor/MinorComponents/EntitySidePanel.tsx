@@ -40,7 +40,7 @@ const EntitySidePanel: React.FC<EntitySidePanelProps> = (
                             Name={attribute.Name}
                             Type={attribute.Type}
                             isPK={isAttributePK(pks, attribute.Identifier)}
-                            IsNullable={attribute.IsNullable}
+                            IsMandatory={attribute.IsMandatory}
                         />
                     ))}
                 </div>

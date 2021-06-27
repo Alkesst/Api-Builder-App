@@ -95,10 +95,10 @@ const Grid : React.FC<IGridProps> = (
 
     return (
         <div className={`Grid-Color ${(expanded) ? 'Expanded' : ''}`}>
-            <div className="flex">
+            <div className="flex align-items-center padding-top-10 padding-left-10">
                 {projectType}
-                <div>
-                    <button type="button" onClick={newEntityCallback}>
+                <div className="padding-left-10">
+                    <button type="button"className="btn btn-outline-light" onClick={newEntityCallback}>
                         <FontAwesomeIcon icon={faPlus} />
                     </button>
                 </div>

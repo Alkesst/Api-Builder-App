@@ -5,7 +5,7 @@ export const createEmptyAttribute = (): IAttribute => (
     {
         Identifier: newGuidString(),
         Name: 'New Attribute',
-        IsNullable: false,
+        IsMandatory: false,
         Type: AttributeType.String,
     }
 )
