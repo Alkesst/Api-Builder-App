@@ -1,7 +1,9 @@
 import React, {
-    useCallback,
+    useCallback, useEffect,
     useMemo, useState,
 } from 'react';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IEntity } from 'api-builder-types';
 import { IRelationship } from 'api-builder-types/relationship';
 import Entity from './MinorComponents/Entity';
@@ -9,10 +11,10 @@ import { hasRelationships, getEntityReference } from '../../Helper/RelationshipH
 import { EntityReference } from '../../Types/ViewTypes';
 import Relationship from './MinorComponents/Relationship';
 import 'Styles/ConfigEditor/Modal.scss';
+import { useEntityStore } from '../Stores/ConfigEditorStore';
 
 interface IGridProps {
     expanded: boolean;
-    projectEntities: IEntity[];
     loading: boolean;
     projectType: string;
     setEntityId: (newValue: string) => void;
@@ -21,11 +23,14 @@ interface IGridProps {
 
 const Grid : React.FC<IGridProps> = (
     {
-        expanded, projectEntities, loading, projectType, setEntityId, setEdit,
+        expanded, loading, projectType, setEntityId, setEdit,
     }
     : IGridProps,
 ) => {
     const [,setEntityBeingDragged] = useState<boolean>(false);
+    const [projectEntities, setProjectEntities] = useState<IEntity[]>([]);
+    const { addEmptyNewEntity, entities } = useEntityStore();
+
     const onEditHandler = useCallback((selectedEntityId: string) => {
         setEdit(true);
         setEntityId(selectedEntityId);
@@ -66,6 +71,10 @@ const Grid : React.FC<IGridProps> = (
         return tempRefObject;
     }, [projectEntities]);
 
+    const newEntityCallback = () => {
+        addEmptyNewEntity();
+    };
+
     const generateEntities = useMemo(() => projectEntities.map((entity: IEntity) => {
         const entityRef = getEntityReference(references, entity.Identifier);
         return (
@@ -80,9 +89,20 @@ const Grid : React.FC<IGridProps> = (
         );
     }), [onDragHandler, projectEntities, references, onEditHandler]);
 
+    useEffect(() => {
+        setProjectEntities(entities);
+    }, [entities]);
+
     return (
         <div className={`Grid-Color ${(expanded) ? 'Expanded' : ''}`}>
-            {projectType}
+            <div className="flex">
+                {projectType}
+                <div>
+                    <button type="button" onClick={newEntityCallback}>
+                        <FontAwesomeIcon icon={faPlus} />
+                    </button>
+                </div>
+            </div>
             {!loading && generateEntities}
             {entityRelationships}
         </div>

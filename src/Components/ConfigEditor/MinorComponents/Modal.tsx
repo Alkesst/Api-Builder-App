@@ -1,8 +1,10 @@
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { AttributeType, IAttribute } from 'api-builder-types';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faTimes, faTrashAlt, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useAttributeStore, useEntityStore } from '../../Stores/ConfigEditorStore';
+import '../../../Styles/layout.scss';
+import { isAttributePK } from 'Helper/EntitiesHelper';
 
 interface ModalProps {
     showing: boolean;
@@ -11,9 +13,10 @@ interface ModalProps {
 }
 
 const Modal: React.FC<ModalProps> = ({ showing, setShowing, entityId } : ModalProps) => {
-    const { update, getAttributesByEntityId } = useAttributeStore();
-    const { getEntity } = useEntityStore();
-    const entityName = getEntity(entityId)!!.Name;
+    const { update, getAttributesByEntityId, deleteAttribute, addEmptyNewAttribute } = useAttributeStore();
+    const { getEntity, setAttributePK } = useEntityStore();
+    const entity = getEntity(entityId)!!;
+    const entityName = entity.Name;
     const modalRows = getAttributesByEntityId(entityId);
     const closeHandler = () => {
         setShowing(false);
@@ -27,8 +30,10 @@ const Modal: React.FC<ModalProps> = ({ showing, setShowing, entityId } : ModalPr
         ))
     ), []);
 
-    const computeModalRows = useMemo(() => modalRows.map((row: IAttribute) => (
-        <div key={`modal-row-${row.Identifier}`} className="flex justify-content-between align-items-center">
+    const isAttributePKCallback = useCallback((identifier: string) => isAttributePK(entity.PK, identifier), [entity.PK]);
+
+    const computeModalRows = useMemo(() => modalRows?.map((row: IAttribute) => (
+        <div key={`modal-row-${row.Identifier}`} className="flex justify-content-between align-items-center padding-5-top-bot">
             <label htmlFor={`input-${row.Identifier}`}>
                 <input
                     id={`input-name-${row.Identifier}`}
@@ -36,20 +41,31 @@ const Modal: React.FC<ModalProps> = ({ showing, setShowing, entityId } : ModalPr
                     onChange={(event) => update(entityId, row.Identifier)('Name', event.target.value)}
                 />
             </label>
-            <select
-                id={`input-type-${row.Identifier}`}
-                value={row.Type}
-                onChange={(event) => update(entityId, row.Identifier)('Type', +event.target.value)}
-            >
-                {computeAttributeTypeElements}
-            </select>
+            <div className="text-white">   
+                Is Primary Key? <input type="checkbox" checked={isAttributePKCallback(row.Identifier)} onChange={(e) => setAttributePK(row.Identifier, e.target.checked)}/>
+            </div>
+            <div className="text-white">   
+                Is Nullable? <input type="checkbox" checked={row.IsNullable} onChange={(e) => setAttributePK(row.Identifier, e.target.checked)}/>
+            </div>
+            <div className="flex select-btn-group btn-group">
+                <select
+                    id={`input-type-${row.Identifier}`}
+                    value={row.Type}
+                    onChange={(event) => update(entityId, row.Identifier)('Type', +event.target.value)}
+                >
+                    {computeAttributeTypeElements}
+                </select>
+                <button type="button" className="btn btn-outline-danger" onClick={() => deleteAttribute(entityId, row.Identifier)}>
+                            <FontAwesomeIcon icon={faTrashAlt} />
+                </button>
+            </div>
         </div>
-    )), [update, modalRows, entityId, computeAttributeTypeElements]);
+    )), [update, deleteAttribute, modalRows, entityId, computeAttributeTypeElements, isAttributePKCallback, setAttributePK]);
 
     return (
         <div className={`modal-edit display-${showing ? 'block' : 'none'}`}>
             <div className="modal-container">
-                <div className="flex justify-content-between padding-bot-5">
+                <div className="flex justify-content-between padding-bot-1rem">
                     <h3 className="text-white">
                         {entityName}
                     </h3>
@@ -57,7 +73,15 @@ const Modal: React.FC<ModalProps> = ({ showing, setShowing, entityId } : ModalPr
                         <FontAwesomeIcon icon={faTimes} />
                     </button>
                 </div>
-                {computeModalRows}
+                <div>
+                <button type="button" className="btn btn-outline-light add" onClick={() => addEmptyNewAttribute(entityId)}>
+                        <FontAwesomeIcon icon={faPlus} />
+                        Attribute
+                    </button>
+                </div>
+                <div className="rows-container">
+                    {computeModalRows}
+                </div>
             </div>
         </div>
     );

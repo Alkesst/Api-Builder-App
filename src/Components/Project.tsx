@@ -29,6 +29,7 @@ const Project: React.FC<ProjectViewProps> = ({
                             onClick={() => setOpen(!open)}
                             aria-controls="example-collapse-text"
                             aria-expanded={open}
+                            className="btn btn-outline-light"
                         >
                             <FontAwesomeIcon icon={(!open) ? faAngleDown : faAngleUp} />
                         </Button>

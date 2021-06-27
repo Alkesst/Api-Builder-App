@@ -9,6 +9,7 @@ import Button from 'react-bootstrap/cjs/Button';
 import Collapse from 'react-bootstrap/cjs/Collapse';
 import { useAttributeStore, useEntityStore } from '../../Stores/ConfigEditorStore';
 import Attribute from './Attribute';
+import { isAttributePK } from 'Helper/EntitiesHelper';
 
 interface IEntityProps {
     Identifier: string;
@@ -21,7 +22,7 @@ const Entity : React.FC<IEntityProps> = (
         Identifier, onDragHandler, onEditHandler,
     }: IEntityProps,
 ) => {
-    const { getEntity } = useEntityStore();
+    const { getEntity, getEntityPKs } = useEntityStore();
     const { getAttributesByEntityId } = useAttributeStore();
     const { Name, Coordinates } = useMemo(() => getEntity(Identifier), [Identifier, getEntity])!!;
     const Attributes = getAttributesByEntityId(Identifier);
@@ -35,10 +36,11 @@ const Entity : React.FC<IEntityProps> = (
         setExpanded(!expanded);
     };
 
-    const computeAttributes = () => (
-        <Collapse in={expanded}>
+    const computeAttributes = () => {
+        const pks = getEntityPKs(Identifier);
+        return (<Collapse in={expanded}>
             <div>
-                {Attributes.map((item) => (
+                {Attributes?.map((item) => (
                     <Attribute
                         key={item.Identifier}
                         Name={item.Name}
@@ -46,12 +48,13 @@ const Entity : React.FC<IEntityProps> = (
                         Identifier={item.Identifier}
                         DefaultValue={null}
                         Precision={null}
+                        isPK={isAttributePK(pks, item.Identifier)}
                         IsNullable
                     />
                 ))}
             </div>
-        </Collapse>
-    );
+        </Collapse>)
+    };
 
     return (
         <div>
@@ -64,7 +67,9 @@ const Entity : React.FC<IEntityProps> = (
             >
                 <div ref={nodeRef} id={Identifier} className="padding-10">
                     <div className="flex justify-content-between align-items-center">
-                        {Name}
+                        <div className="header">
+                            {Name}
+                        </div>
                         <div className="btn-group">
                             <button
                                 className="btn btn-outline-light"
