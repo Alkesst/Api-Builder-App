@@ -70,12 +70,39 @@ input {
   border-radius: 3px;
   background: #282c34;
   color: white;
-  border-color: lightgrey;
+  border-color: rgba(255, 255, 255, 0.4);
 }
 
 select {
   border-radius: 3px;
   background: #282c34;
   color: white;
-  border-color: lightgrey;
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+h3.text-white {
+  margin-bottom: 0px;
+}
+
+label {
+  margin-bottom: 0px;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: white; 
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(black, 0.5); 
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
 }

@@ -5,6 +5,7 @@ import {
 } from 'api-builder-types';
 import { StateSetterCallback } from '../../Types/ViewTypes';
 import { getProject } from '../../Helper/Retriever';
+import { createEmptyAttribute, createEmptyEntity, sliceAttributesArray } from 'Helper/StoreHelper';
 
 interface ConfigurationEditorStore {
     projectConfig?: IProjectConfig,
@@ -20,6 +21,8 @@ interface EntityStore {
     setEntities: StateSetterCallback;
     getEntity: (entityId: string) => IEntity | undefined;
     addEmptyNewEntity: () => void;
+    setAttributePK: (attributeId: string, isAddition: boolean) => void;
+    getEntityPKs: (entityId: string) => string[];
 }
 
 interface AttributeStore {
@@ -30,6 +33,8 @@ interface AttributeStore {
         attributeId: string
     ) => <T extends keyof IAttribute>(fieldName: T, newValue: IAttribute[T]) => void;
     getAttributesByEntityId: (entityId: string) => IAttribute[];
+    addEmptyNewAttribute: (entityId: string) => void;
+    deleteAttribute: (entityId: string, attributeId: string) => void;
 }
 
 export interface AttributesStoreStructure {
@@ -59,12 +64,8 @@ export const useAttributeStore = create<AttributeStore>(devtools(
         ) => (
             <T extends keyof IAttribute>(fieldName: T, newValue: IAttribute[T]) => {
                 const { attributes } = get().attributes[entityId];
-                const attributeToUpdateIndex = attributes.findIndex(
-                    (attribute) => attribute.Identifier === attributeId,
-                );
-                if (attributeToUpdateIndex === -1) return;
-                const slice1 = attributes.slice(0, attributeToUpdateIndex);
-                const slice2 = attributes.slice(attributeToUpdateIndex + 1);
+                const { slice1, slice2, attributeToUpdateIndex } = sliceAttributesArray(attributes, attributeId);
+                if(attributeToUpdateIndex === -1) return;
                 const attributeToUpdate = {
                     ...attributes[attributeToUpdateIndex],
                     [fieldName]: newValue,
@@ -83,6 +84,32 @@ export const useAttributeStore = create<AttributeStore>(devtools(
         getAttributesByEntityId: (entityId: string) => (
             get().attributes[entityId]?.attributes
         ),
+        addEmptyNewAttribute: (entityId: string) => {
+            const { attributes } = get()?.attributes[entityId];
+            set((state) => ({
+                attributes: {
+                    ...state.attributes,
+                    [entityId]: {
+                        attributes: [...attributes, ...[createEmptyAttribute()]],
+                        saving: false,
+                    },
+                },
+            }));
+        },
+        deleteAttribute: (entityId: string, attributeId: string) => {
+            const { attributes } = get().attributes[entityId];
+            const { slice1, slice2, attributeToUpdateIndex } = sliceAttributesArray(attributes, attributeId);
+            if(attributeToUpdateIndex === -1) return;
+            set((state) => ({
+                attributes: {
+                    ...state.attributes,
+                    [entityId]: {
+                        attributes: [...slice1, ...slice2],
+                        saving: false,
+                    },
+                },
+            }))
+        }
     }),
 ));
 
@@ -102,16 +129,16 @@ export const useEntityStore = create<EntityStore>(devtools(
         ),
         addEmptyNewEntity: () => {
             set((state) => ({
-                entities: [...state.entities, ...[{
-                    Name: `New Entity ${get().entities.length}`,
-                    Relationships: [],
-                    Constraints: [],
-                    Coordinates: { X: 0, Y: 0 },
-                    Identifier: `NewEntity-${get().entities.length}`,
-                    Attributes: [],
-                }]],
+                entities: [...state.entities, ...[createEmptyEntity(get().entities.length)]],
             }));
         },
+        setAttributePK: (attributeId: string, isAddition: boolean) => {
+            // jeje
+        },
+        getEntityPKs: (entityId: string) => {
+            const entity = get().getEntity(entityId);
+            return entity?.PK || [];
+        }
     }),
 ));
 

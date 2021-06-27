@@ -7,13 +7,12 @@
 }
 
 .modal-edit {
-  position: absolute;
+  position: fixed;
   z-index: 1030;
   left: 0;
   top: 0;
   width: 100%;
   height: 100%;
-  overflow: auto;
   background-color: rgb(0,0,0);
   background-color: rgba(0,0,0,0.4);
 }
@@ -24,5 +23,27 @@
   padding: 20px;
   border: 1px solid #888;
   border-radius: 3px;
-  width: 30%; /* Could be more or less, depending on screen size */
+  width: 50%; /* Could be more or less, depending on screen size */
+}
+
+.rows-container { 
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.select-btn-group {
+  select {
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+  }
+}
+
+Button.btn.add {
+  height: auto;
+  width: auto;
+  margin-bottom: 1rem;
+}
+
+Button.btn.add svg {
+  margin-right: 10px;
 }

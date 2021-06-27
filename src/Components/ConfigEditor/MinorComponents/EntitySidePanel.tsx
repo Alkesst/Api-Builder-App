@@ -6,6 +6,7 @@ import { faAngleDown, faAngleUp, faPencilAlt } from '@fortawesome/free-solid-svg
 import Collapse from 'react-bootstrap/cjs/Collapse';
 import Attribute from './Attribute';
 import { useEntityStore } from '../../Stores/ConfigEditorStore';
+import { isAttributePK } from 'Helper/EntitiesHelper';
 
 interface EntitySidePanelProps {
     entityId: string;
@@ -19,7 +20,7 @@ const EntitySidePanel: React.FC<EntitySidePanelProps> = (
         entityId, setEntityId, setEdit, hidden,
     }: EntitySidePanelProps,
 ) => {
-    const { getEntity } = useEntityStore();
+    const { getEntity, getEntityPKs } = useEntityStore();
     const [entity, setEntity] = useState<IEntity>();
     const [expanded, setExpanded] = useState<boolean>(false);
 
@@ -27,21 +28,25 @@ const EntitySidePanel: React.FC<EntitySidePanelProps> = (
         if (!entity) setEntity((getEntity(entityId)));
     }, [getEntity, entityId, entity, setEntity]);
 
-    const attributes = useMemo(() => (
-        <Collapse in={expanded}>
-            <div>
-                {entity?.Attributes.map((attribute) => (
-                    <Attribute
-                        key={`side-panel-attr-${attribute.Identifier}`}
-                        Identifier={attribute.Identifier}
-                        Name={attribute.Name}
-                        Type={attribute.Type}
-                        IsNullable={attribute.IsNullable}
-                    />
-                ))}
-            </div>
-        </Collapse>
-    ), [expanded, entity]);
+    const attributes = useMemo(() => {
+        const pks = getEntityPKs(entityId);
+        return (
+            <Collapse in={expanded}>
+                <div>
+                    {entity?.Attributes.map((attribute) => (
+                        <Attribute
+                            key={`side-panel-attr-${attribute.Identifier}`}
+                            Identifier={attribute.Identifier}
+                            Name={attribute.Name}
+                            Type={attribute.Type}
+                            isPK={isAttributePK(pks, attribute.Identifier)}
+                            IsNullable={attribute.IsNullable}
+                        />
+                    ))}
+                </div>
+            </Collapse>
+        )
+    }, [expanded, entity, entityId, getEntityPKs]);
 
     const setExpandedCallback = () => setExpanded(!expanded);
     const editCallback = () => {
