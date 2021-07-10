@@ -14,7 +14,7 @@ interface ModalProps {
 
 const Modal: React.FC<ModalProps> = ({ showing, setShowing, entityId } : ModalProps) => {
     const { update, getAttributesByEntityId, deleteAttribute, addEmptyNewAttribute } = useAttributeStore();
-    const { getEntity, setAttributePK } = useEntityStore();
+    const { getEntity, setAttributePK, update: updateEntity } = useEntityStore();
     const entity = getEntity(entityId)!!;
     const entityName = entity.Name;
     const modalRows = getAttributesByEntityId(entityId);
@@ -36,6 +36,7 @@ const Modal: React.FC<ModalProps> = ({ showing, setShowing, entityId } : ModalPr
         <div key={`modal-row-${row.Identifier}`} className="flex justify-content-between align-items-center padding-5-top-bot">
             <label htmlFor={`input-${row.Identifier}`}>
                 <input
+                    title={`${row.Name} input`}
                     id={`input-name-${row.Identifier}`}
                     value={row.Name}
                     onChange={(event) => update(entityId, row.Identifier)('Name', event.target.value)}
@@ -67,7 +68,15 @@ const Modal: React.FC<ModalProps> = ({ showing, setShowing, entityId } : ModalPr
             <div className="modal-container">
                 <div className="flex justify-content-between padding-bot-1rem">
                     <h3 className="text-white">
-                        {entityName}
+                        <div>
+                            <input 
+                                title="Entity Name input"
+                                placeholder="Entity Name"
+                                className="margin-bot-10"
+                                value={entityName}
+                                onChange={(event) => updateEntity(entityId)('Name', event.target.value)}
+                            />
+                        </div>
                     </h3>
                     <button type="button" className="btn btn-outline-light" onClick={closeHandler}>
                         <FontAwesomeIcon icon={faTimes} />

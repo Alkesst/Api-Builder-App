@@ -5,7 +5,7 @@ import {
 } from 'api-builder-types';
 import { StateSetterCallback } from '../../Types/ViewTypes';
 import { getProject } from '../../Helper/Retriever';
-import { createEmptyAttribute, createEmptyEntity, sliceAttributesArray } from 'Helper/StoreHelper';
+import { createEmptyAttribute, createEmptyEntity, sliceArray, sliceAttributesArray } from 'Helper/StoreHelper';
 
 interface ConfigurationEditorStore {
     projectConfig?: IProjectConfig,
@@ -23,6 +23,8 @@ interface EntityStore {
     addEmptyNewEntity: () => void;
     setAttributePK: (attributeId: string, entityId: string, isAddition: boolean) => void;
     getEntityPKs: (entityId: string) => string[];
+    update: (entityId: string) => 
+        <T extends keyof IEntity>(fieldName: T, newValue: IEntity[T]) => void;
 }
 
 interface AttributeStore {
@@ -153,7 +155,20 @@ export const useEntityStore = create<EntityStore>(devtools(
         getEntityPKs: (entityId: string) => {
             const entity = get().getEntity(entityId);
             return entity?.PK || [];
-        }
+        },
+        update: (entityId: string) => 
+            <T extends keyof IEntity>(fieldName: T, newValue: IEntity[T]) => {
+                const entities = get().entities;
+                const entityIndex = entities.findIndex((entity) => entity.Identifier === entityId);
+                const entityUpdated = {
+                    ...entities[entityIndex],
+                    [fieldName]: newValue
+                };
+                const [slice1, slice2] = sliceArray<IEntity>(entities, entityIndex);
+                set(() => ({
+                    entities: [...slice1, entityUpdated, ...slice2]
+                }));
+            }
     }),
 ));
 
