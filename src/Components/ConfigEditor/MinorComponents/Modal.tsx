@@ -10,9 +10,10 @@ interface ModalProps {
     showing: boolean;
     setShowing: (newValue: boolean) => void;
     entityId: string;
+    setDeleted: () => void;
 }
 
-const Modal: React.FC<ModalProps> = ({ showing, setShowing, entityId } : ModalProps) => {
+const Modal: React.FC<ModalProps> = ({ showing, setShowing, entityId, setDeleted } : ModalProps) => {
     const { update, getAttributesByEntityId, deleteAttribute, addEmptyNewAttribute } = useAttributeStore();
     const { getEntity, setAttributePK, update: updateEntity } = useEntityStore();
     const entity = getEntity(entityId)!!;
@@ -21,6 +22,11 @@ const Modal: React.FC<ModalProps> = ({ showing, setShowing, entityId } : ModalPr
     const closeHandler = () => {
         setShowing(false);
     };
+
+    const deleteHandler = () => {
+        setDeleted();
+        setShowing(false);
+    }
 
     const computeAttributeTypeElements = useMemo(() => (
         Object.keys(AttributeType).filter((el) => Number.isNaN(+el)).map((key) => (
@@ -78,9 +84,14 @@ const Modal: React.FC<ModalProps> = ({ showing, setShowing, entityId } : ModalPr
                             />
                         </div>
                     </h3>
-                    <button type="button" className="btn btn-outline-light" onClick={closeHandler}>
-                        <FontAwesomeIcon icon={faTimes} />
-                    </button>
+                    <div className="btn-group">
+                        <button type="button" className="btn btn-outline-danger" onClick={deleteHandler}>
+                            <FontAwesomeIcon icon={faTrashAlt} />
+                        </button>
+                        <button type="button" className="btn btn-outline-light" onClick={closeHandler}>
+                            <FontAwesomeIcon icon={faTimes} />
+                        </button>
+                    </div>
                 </div>
                 <div>
                 <button type="button" className="btn btn-outline-light add" onClick={() => addEmptyNewAttribute(entityId)}>

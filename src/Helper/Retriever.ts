@@ -14,6 +14,10 @@ export const baseRequest = async<T> (route: string, config?: RequestInit): Promi
 export const retrieveProjects = async (): Promise<IProject[]> => baseRequest<IProject[]>('/projects');
 export const retrieveProjectConfig = async (): Promise<IEntity[]> => baseRequest<IEntity[]>('/projectConfig');
 export const getProject = async (id: string) : Promise<IProjectConfig> => baseRequest<IProjectConfig>(`/projectConfig/${id}`);
+export const deleteEntity = async (id: string): Promise<void> => {
+    const config: RequestInit = {method: 'delete'};
+    baseRequest(`/entity/${id}`, config);
+}
 
 export const login = async (): Promise<void> => {
     const config: RequestInit = { method: 'POST' };

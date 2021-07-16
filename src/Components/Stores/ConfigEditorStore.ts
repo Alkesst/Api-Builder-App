@@ -23,12 +23,13 @@ interface EntityStore {
     addEmptyNewEntity: () => void;
     setAttributePK: (attributeId: string, entityId: string, isAddition: boolean) => void;
     getEntityPKs: (entityId: string) => string[];
-    update: (entityId: string) => 
+    update: (entityId: string) =>
         <T extends keyof IEntity>(fieldName: T, newValue: IEntity[T]) => void;
+    deleteEntity: (entityId: string) => void;
 }
 
 interface AttributeStore {
-    attributes: { [key: string]: AttributesStoreStructure};
+    attributes: { [key: string]: AttributesStoreStructure };
     appendAttributes: (entityId: string, attributes: IAttribute[]) => void;
     update: (
         entityId: string,
@@ -67,7 +68,7 @@ export const useAttributeStore = create<AttributeStore>(devtools(
             <T extends keyof IAttribute>(fieldName: T, newValue: IAttribute[T]) => {
                 const { attributes } = get().attributes[entityId];
                 const { slice1, slice2, attributeToUpdateIndex } = sliceAttributesArray(attributes, attributeId);
-                if(attributeToUpdateIndex === -1) return;
+                if (attributeToUpdateIndex === -1) return;
                 const attributeToUpdate = {
                     ...attributes[attributeToUpdateIndex],
                     [fieldName]: newValue,
@@ -101,7 +102,7 @@ export const useAttributeStore = create<AttributeStore>(devtools(
         deleteAttribute: (entityId: string, attributeId: string) => {
             const { attributes } = get().attributes[entityId];
             const { slice1, slice2, attributeToUpdateIndex } = sliceAttributesArray(attributes, attributeId);
-            if(attributeToUpdateIndex === -1) return;
+            if (attributeToUpdateIndex === -1) return;
             set((state) => ({
                 attributes: {
                     ...state.attributes,
@@ -139,16 +140,16 @@ export const useEntityStore = create<EntityStore>(devtools(
             const entity = get().entities[entityIndex];
             const entities1 = get().entities.slice(0, entityIndex);
             const entities2 = get().entities.slice(entityIndex + 1);
-            if(isAddition) {
+            if (isAddition) {
                 set(() => ({
-                    entities: [...entities1, {...entity, PK: [...entity.PK, attributeId]}, ...entities2]
+                    entities: [...entities1, { ...entity, PK: [...entity.PK, attributeId] }, ...entities2]
                 }))
             } else {
                 const indexAttr = entity.PK.findIndex((el) => el === attributeId);
                 const slice1 = entity.PK.slice(0, indexAttr);
                 const slice2 = entity.PK.slice(indexAttr + 1);
                 set(() => ({
-                    entities: [...entities1, {...entity, PK: [...slice1, ...slice2]}, ...entities2]
+                    entities: [...entities1, { ...entity, PK: [...slice1, ...slice2] }, ...entities2]
                 }))
             }
         },
@@ -156,7 +157,7 @@ export const useEntityStore = create<EntityStore>(devtools(
             const entity = get().getEntity(entityId);
             return entity?.PK || [];
         },
-        update: (entityId: string) => 
+        update: (entityId: string) =>
             <T extends keyof IEntity>(fieldName: T, newValue: IEntity[T]) => {
                 const entities = get().entities;
                 const entityIndex = entities.findIndex((entity) => entity.Identifier === entityId);
@@ -168,7 +169,15 @@ export const useEntityStore = create<EntityStore>(devtools(
                 set(() => ({
                     entities: [...slice1, entityUpdated, ...slice2]
                 }));
-            }
+            },
+        deleteEntity: (entityId: string) => {
+            const entities = get().entities;
+            const entityIndex = entities.findIndex((entity) => entity.Identifier === entityId);
+            const [slice1, slice2] = sliceArray<IEntity>(entities, entityIndex);
+            set(() => ({
+                entities: [...slice1, ...slice2]
+            }));
+        }
     }),
 ));
 
