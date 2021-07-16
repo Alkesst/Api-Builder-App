@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useAttributeStore, useEntityStore } from '../../Stores/ConfigEditorStore';
 import '../../../Styles/layout.scss';
 import { isAttributePK } from 'Helper/EntitiesHelper';
+import { saveEntity } from 'Helper/Retriever';
 
 interface ModalProps {
     showing: boolean;
@@ -26,6 +27,10 @@ const Modal: React.FC<ModalProps> = ({ showing, setShowing, entityId, setDeleted
     const deleteHandler = () => {
         setDeleted();
         setShowing(false);
+    }
+
+    const save = () => {
+        saveEntity(entity);
     }
 
     const computeAttributeTypeElements = useMemo(() => (
@@ -102,6 +107,9 @@ const Modal: React.FC<ModalProps> = ({ showing, setShowing, entityId, setDeleted
                 <div className="rows-container">
                     {computeModalRows}
                 </div>
+                <button onClick={save}>
+                    Save
+                </button>
             </div>
         </div>
     );

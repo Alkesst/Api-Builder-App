@@ -18,6 +18,10 @@ export const deleteEntity = async (id: string): Promise<void> => {
     const config: RequestInit = {method: 'delete'};
     baseRequest(`/entity/${id}`, config);
 }
+export const saveEntity = async (payload: IEntity): Promise<void> => {
+    const config: RequestInit = {method: 'post', body: JSON.stringify(payload)};
+    baseRequest(`/entity`, config);
+}
 
 export const login = async (): Promise<void> => {
     const config: RequestInit = { method: 'POST' };
