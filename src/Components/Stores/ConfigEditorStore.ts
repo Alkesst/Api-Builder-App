@@ -82,6 +82,7 @@ export const useAttributeStore = create<AttributeStore>(devtools(
                         },
                     },
                 }));
+                useEntityStore.getState().update(entityId)('Attributes', [...slice1, attributeToUpdate, ...slice2]);
             }
         ),
         getAttributesByEntityId: (entityId: string) => (
@@ -98,6 +99,7 @@ export const useAttributeStore = create<AttributeStore>(devtools(
                     },
                 },
             }));
+            useEntityStore.getState().update(entityId)('Attributes', [...attributes?.attributes || [], ...[createEmptyAttribute()]]);
         },
         deleteAttribute: (entityId: string, attributeId: string) => {
             const { attributes } = get().attributes[entityId];
@@ -111,7 +113,8 @@ export const useAttributeStore = create<AttributeStore>(devtools(
                         saving: false,
                     },
                 },
-            }))
+            }));
+            useEntityStore.getState().update(entityId)('Attributes', [...slice1, ...slice2]);
         }
     }),
 ));
