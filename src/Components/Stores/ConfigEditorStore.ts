@@ -14,6 +14,7 @@ interface ConfigurationEditorStore {
     loading: boolean;
     setLoading: StateSetterCallback;
     getEntitiesByProject: () => IEntity[] | undefined;
+    updateEntities: (entities: IEntity[]) => void;
 }
 
 interface EntityStore {
@@ -137,6 +138,7 @@ export const useEntityStore = create<EntityStore>(devtools(
             set((state) => ({
                 entities: [...state.entities, ...[createEmptyEntity(get().entities.length)]],
             }));
+            useConfigurationEditorStore.getState().updateEntities([...get().entities, ...[createEmptyEntity(get().entities.length)]]);
         },
         setAttributePK: (attributeId: string, entityId: string, isAddition: boolean) => {
             const entityIndex = get().entities.findIndex((el) => el.Identifier === entityId);
@@ -146,14 +148,16 @@ export const useEntityStore = create<EntityStore>(devtools(
             if (isAddition) {
                 set(() => ({
                     entities: [...entities1, { ...entity, PK: [...entity.PK, attributeId] }, ...entities2]
-                }))
+                }));
+                useConfigurationEditorStore.getState().updateEntities([...entities1, { ...entity, PK: [...entity.PK, attributeId] }, ...entities2]);
             } else {
                 const indexAttr = entity.PK.findIndex((el) => el === attributeId);
                 const slice1 = entity.PK.slice(0, indexAttr);
                 const slice2 = entity.PK.slice(indexAttr + 1);
                 set(() => ({
                     entities: [...entities1, { ...entity, PK: [...slice1, ...slice2] }, ...entities2]
-                }))
+                }));
+                useConfigurationEditorStore.getState().updateEntities([...entities1, { ...entity, PK: [...slice1, ...slice2] }, ...entities2]);
             }
         },
         getEntityPKs: (entityId: string) => {
@@ -172,6 +176,7 @@ export const useEntityStore = create<EntityStore>(devtools(
                 set(() => ({
                     entities: [...slice1, entityUpdated, ...slice2]
                 }));
+                useConfigurationEditorStore.getState().updateEntities([...slice1, entityUpdated, ...slice2]);
             },
         deleteEntity: (entityId: string) => {
             const entities = get().entities;
@@ -180,6 +185,7 @@ export const useEntityStore = create<EntityStore>(devtools(
             set(() => ({
                 entities: [...slice1, ...slice2]
             }));
+            useConfigurationEditorStore.getState().updateEntities([...slice1, ...slice2]);
         }
     }),
 ));
@@ -197,5 +203,13 @@ export const useConfigurationEditorStore = create<ConfigurationEditorStore>(devt
             get().setLoading(false);
         },
         getEntitiesByProject: (() => get().projectConfig?.Entities),
+        updateEntities: (entities: IEntity[]) => {
+            set((state) => ({
+                projectConfig: {
+                    ...state.projectConfig!!,
+                    Entities: entities
+                }
+            }))
+        }
     }),
 ));
