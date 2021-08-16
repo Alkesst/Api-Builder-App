@@ -10,6 +10,11 @@
     text-align: justify;
 }
 
-.text-white {
-    color: white;
+.text-gainsboro {
+    color: gainsboro !important;
+}
+
+textarea {
+    width: 100%;
+    height: 150px;
 }

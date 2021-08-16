@@ -21,7 +21,6 @@ const StickyNav: React.FC = () => {
     const generateButtonsForLoggedUsers = () => (
         <>
             <Nav.Link href="/projects">Projects</Nav.Link>
-            <Nav.Link href="/configs/editor">Editor</Nav.Link>
         </>
     );
 

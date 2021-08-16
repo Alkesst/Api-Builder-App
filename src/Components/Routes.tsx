@@ -14,9 +14,9 @@ const Routes: React.FC = () => (
         <StickyNav />
         <Switch>
             <Route path="/login" component={Login} />
-            <Route path="/projects/:id" component={ProjectInfo} />
+            <Route path="/project/editor/:id" component={ConfigurationEditor} />
+            <Route path="/project/:id" component={ProjectInfo} />
             <Route path="/projects" component={ProjectsView} />
-            <Route path="/configs/editor" component={ConfigurationEditor} />
             <Route exact path="/" component={App} />
         </Switch>
     </div>

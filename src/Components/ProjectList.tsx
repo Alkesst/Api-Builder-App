@@ -18,8 +18,8 @@ const ProjectList: React.FC<ProjectViewProps> = ({
     const history = useHistory();
 
     const handleClick = (projectId: string) => {
-        history.push(`projects/${projectId}`);
-    }
+        history.push(`project/${projectId}`);
+    };
 
     return (
         <div className="project-container margin-bot-15">

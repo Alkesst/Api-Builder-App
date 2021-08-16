@@ -11,9 +11,12 @@
 }
 
 .App-Background {
-  text-align: center;
   height: 100%;
   background-color: #282c34;
+}
+
+.Center-Text {
+  text-align: center;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -28,12 +31,15 @@
 
 .App-header  {
   background-color: #282c34;
+  font-size: calc(10px + 2vmin);
+  color: gainsboro;
+}
+
+.Center-Content { 
   display: flex;
   flex: 1 1 auto;
   flex-direction: column;
   align-items: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
 .App-link {
@@ -81,6 +87,10 @@ select {
 
 h3.text-white {
   margin-bottom: 0px;
+}
+
+.text-gainsboro {
+  color: gainsboro !important;
 }
 
 label {
