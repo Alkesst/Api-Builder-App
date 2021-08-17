@@ -46,6 +46,10 @@
   padding-top: 5px;
 }
 
+.margin-left-15 {
+  margin-left: 15px
+}
+
 .padding-sides-5 {
   @extend .padding-left-5;
   @extend .padding-right-5;
