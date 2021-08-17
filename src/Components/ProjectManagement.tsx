@@ -36,7 +36,7 @@ const ProjectsView : React.FC = () => {
             <div className="flex justify-content-between align-items-center padding-right-15">
                 <h1 className="padding-top-15 padding-left-15">Projects</h1>
                 <div>
-                    <FontAwesomeIcon icon={faSearch} title="Mandatory"/>
+                    <FontAwesomeIcon icon={faSearch} />
                     <input className="margin-left-15" onChange={(e) => handleFiltering(e)} />
                 </div>
             </div>

@@ -18,3 +18,8 @@
 .entity.side-panel.hidden {
   visibility: hidden;
 }
+
+.hidden {
+  transition: visibility 250ms;
+  visibility: hidden;
+}
