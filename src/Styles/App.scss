@@ -71,18 +71,23 @@ Button.btn {
   color: black;
 }
 
-input {
+@mixin inputs {
   border-radius: 3px;
   background: #282c34;
   color: white;
   border-color: rgba(255, 255, 255, 0.4);
 }
 
+input {
+  @include inputs;
+}
+
 select {
-  border-radius: 3px;
-  background: #282c34;
-  color: white;
-  border-color: rgba(255, 255, 255, 0.4);
+  @include inputs;
+}
+
+textarea {
+  @include inputs;
 }
 
 h3.text-white {

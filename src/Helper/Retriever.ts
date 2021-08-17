@@ -22,6 +22,10 @@ export const saveEntity = async (payload: IEntity): Promise<void> => {
     const config: RequestInit = {method: 'post', body: JSON.stringify(payload)};
     baseRequest(`/entity`, config);
 };
+export const saveProjectInfo = async (payload: IProject): Promise<void> => {
+    const config: RequestInit = {method: 'post', body: JSON.stringify(payload)};
+    baseRequest(`/project`, config);
+};
 export const getProjectInfo = async (id: string): Promise<IProject> => baseRequest<IProject>(`/project/${id}`);
 
 export const login = async (): Promise<void> => {

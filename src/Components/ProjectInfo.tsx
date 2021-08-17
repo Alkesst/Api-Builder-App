@@ -1,4 +1,4 @@
-import { getProjectInfo } from "Helper/Retriever";
+import { getProjectInfo, saveProjectInfo } from "Helper/Retriever";
 import React, { ChangeEvent, useState } from "react";
 import { useCallback } from "react";
 import { useEffect } from "react";
@@ -36,6 +36,13 @@ const ProjectInfo: React.FC = () => {
             setProject({ ...project, [fieldName]: e.target.value});
         }
     }
+    const handleSave = () => {
+        saveProjectInfo(project!!).then(() => {
+            console.log('OK');
+            setLoading(false);
+            setEtiding(false);
+        });
+    }
 
     return (
         <div className="App App-Background text-gainsboro projects-container-align">
@@ -63,13 +70,23 @@ const ProjectInfo: React.FC = () => {
                             </h3>
                             <h5>
                                 {!editing && project?.Type}
+                                {editing && <select
+                                        value={project?.Type}
+                                        onChange={(e) => handleEdit(e, 'Type')}>
+                                        <option value="Relational">
+                                            Relational
+                                        </option>
+                                        <option value="NoRelational">
+                                            No Relational
+                                        </option>
+                                    </select>}
                             </h5>
                             <p className="description">
                                 {!editing && project?.Description}
                                 {editing && <textarea value={project?.Description} onChange={(e) => handleEdit(e, 'Description')} />}
                             </p>
                         </div>
-                        {editing && <button onClick={() => editingCallback(false)}>Save</button>}
+                        {editing && <button onClick={handleSave}>Save</button>}
                     </div>
                 </div>
             }
