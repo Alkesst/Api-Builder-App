@@ -27,7 +27,8 @@ const ProjectsView : React.FC = () => {
             setFilteredProjects(projects); 
             return;
         }
-        const a = filteredProjects?.filter((e: IProject) => e.Name.includes(event.target.value) || e.Type.toString().includes(event.target.value));
+        const filterValue = event.target.value.toLocaleLowerCase();
+        const a = filteredProjects?.filter((e: IProject) => e.Name.toLowerCase().includes(filterValue) || e.Type.toString().toLocaleLowerCase().includes(filterValue));
         setFilteredProjects(a);
     }
 

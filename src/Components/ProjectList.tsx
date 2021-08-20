@@ -24,13 +24,13 @@ const ProjectList: React.FC<ProjectViewProps> = ({
     return (
         <div className="project-container margin-bot-15">
             <div className="flex justify-content-between align-items-center">
-                <div className="flex">
+                <div>
                     <div className="padding-right">
                         {Name}
                     </div>
-                    <div>
+                    <h6 className="grey-text">
                         {Type}
-                    </div>
+                    </h6>
                 </div>
                 <button className="btn btn-outline-light" onClick={() => handleClick(Identifier)}>
                     <FontAwesomeIcon icon={faChevronRight} />

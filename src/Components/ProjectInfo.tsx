@@ -55,7 +55,10 @@ const ProjectInfo: React.FC = () => {
                                 Edit
                             </button>
                             <button>
-                                Download
+                                Download Package
+                            </button>
+                            <button>
+                                Export Config
                             </button>
                             <button onClick={handleClick}>
                                 Update Config

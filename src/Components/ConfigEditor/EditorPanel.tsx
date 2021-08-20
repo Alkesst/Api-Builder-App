@@ -40,7 +40,7 @@ const EditorPanel : React.FC<IEditorPanelProps> = ({
             setFilteredEntities(projectEntities); 
             return;
         }
-        const a = filteredEntities?.filter((e: IEntity) => e.Name.includes(event.target.value));
+        const a = filteredEntities?.filter((e: IEntity) => e.Name.toLowerCase().includes(event.target.value.toLocaleLowerCase()));
         setFilteredEntities(a);
     }
 
