@@ -1,11 +1,13 @@
 import { faDownload, faEdit, faFileExport, faPencilAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { getProjectInfo, saveProjectInfo } from "Helper/Retriever";
-import React, { ChangeEvent, useState } from "react";
+import React, { useState } from "react";
 import { useCallback } from "react";
 import { useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
 import { IProject } from "../../../api-builder-types";
+import EditProject from "./EditProject";
 
 interface RouteParams {
     id: string;
@@ -33,15 +35,11 @@ const ProjectInfo: React.FC = () => {
     }, [setLoading, id, project]);
 
     const editingCallback = useCallback((value: boolean) => setEtiding(value), [setEtiding]);
-    const handleEdit = (e: ChangeEvent<any>, fieldName: keyof IProject) => {
-        if(project) {
-            setProject({ ...project, [fieldName]: e.target.value});
-        }
-    }
+
     const handleSave = () => {
         saveProjectInfo(project!!).then(() => {
-            console.log('OK');
             setLoading(false);
+            toast.dark("The project has been saved!", {position: "bottom-right"});
             setEtiding(false);
         });
     }
@@ -67,32 +65,21 @@ const ProjectInfo: React.FC = () => {
                             </button>
                         </div>
                     </div>
-                    <div className="App-Background App-Background-Height-Title text-gainsboro padding-left-15 padding-right-15">
+                    {!editing && <div className="App-Background App-Background-Height-Title text-gainsboro padding-left-15 padding-right-15">
                         <div className="padding-top-15">
                             <h3>
-                                {!editing && project?.Name}
-                                {editing && <input value={project?.Name} onChange={(e) => handleEdit(e, 'Name')} />}
+                                {project?.Name}
                             </h3>
                             <h5>
-                                {!editing && project?.Type}
-                                {editing && <select
-                                        value={project?.Type}
-                                        onChange={(e) => handleEdit(e, 'Type')}>
-                                        <option value="Relational">
-                                            Relational
-                                        </option>
-                                        <option value="NoRelational">
-                                            No Relational
-                                        </option>
-                                    </select>}
+                                {project?.Type}
                             </h5>
                             <p className="description">
-                                {!editing && project?.Description}
-                                {editing && <textarea value={project?.Description} onChange={(e) => handleEdit(e, 'Description')} />}
+                                {project?.Description}
                             </p>
                         </div>
-                        {editing && <button onClick={handleSave}>Save</button>}
-                    </div>
+                    </div>}
+                    {editing && <EditProject project={project} setProject={setProject} handleSave={handleSave} />}
+                    <ToastContainer />
                 </div>
             }
         </div>
