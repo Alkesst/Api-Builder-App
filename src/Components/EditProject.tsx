@@ -1,3 +1,5 @@
+import { faSave } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { ChangeEvent } from "react";
 import { IProject } from "../../../api-builder-types";
 
@@ -35,7 +37,9 @@ const EditProject: React.FC<EditProjectProps> = ({project, setProject, handleSav
                 <p>
                     <textarea value={project?.Description} onChange={(e) => handleEdit(e, 'Description')} />
                 </p>
-                <button onClick={handleSave}>Save</button>
+                <button onClick={handleSave} className="btn square btn-outline-light">
+                    <FontAwesomeIcon icon={faSave} />
+                </button>
             </div>
         </div>
     )

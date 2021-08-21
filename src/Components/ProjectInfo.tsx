@@ -39,8 +39,12 @@ const ProjectInfo: React.FC = () => {
     const handleSave = () => {
         saveProjectInfo(project!!).then(() => {
             setLoading(false);
-            toast.dark("The project has been saved!", {position: "bottom-right"});
             setEtiding(false);
+            toast.dark("The project has been saved!", {position: "bottom-right"});
+        }).catch(() => {
+            setLoading(false);
+            setEtiding(false);
+            toast.error("An error has ocurred while saving the project :(" , {position: "bottom-right"});
         });
     }
 

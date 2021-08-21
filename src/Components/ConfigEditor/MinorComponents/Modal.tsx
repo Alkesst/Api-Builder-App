@@ -1,11 +1,12 @@
 import React, { useCallback, useMemo } from 'react';
 import { AttributeType, IAttribute } from 'api-builder-types';
-import { faTimes, faTrashAlt, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faTimes, faTrashAlt, faPlus, faSave } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useAttributeStore, useEntityStore } from '../../Stores/ConfigEditorStore';
 import '../../../Styles/layout.scss';
 import { isAttributePK } from 'Helper/EntitiesHelper';
 import { saveEntity } from 'Helper/Retriever';
+import { toast, ToastContainer } from 'react-toastify';
 
 interface ModalProps {
     showing: boolean;
@@ -30,7 +31,11 @@ const Modal: React.FC<ModalProps> = ({ showing, setShowing, entityId, setDeleted
     }
 
     const save = () => {
-        saveEntity(entity);
+        saveEntity(entity).then(() => {
+            toast.dark("The entity has been saved!", {position: "bottom-right"});
+        }).catch(() => {
+            toast.error("An error has ocurred while saving the entity :(" , {position: "bottom-right"});
+        });
     }
 
     const computeAttributeTypeElements = useMemo(() => (
@@ -108,9 +113,10 @@ const Modal: React.FC<ModalProps> = ({ showing, setShowing, entityId, setDeleted
                     {computeModalRows}
                 </div>
                 <button onClick={save} className="btn square btn-outline-light">
-                    Save
+                    <FontAwesomeIcon icon={faSave} />
                 </button>
             </div>
+            <ToastContainer />
         </div>
     );
 };
