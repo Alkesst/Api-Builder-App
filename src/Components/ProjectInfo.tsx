@@ -1,3 +1,5 @@
+import { faDownload, faEdit, faFileExport, faPencilAlt } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { getProjectInfo, saveProjectInfo } from "Helper/Retriever";
 import React, { ChangeEvent, useState } from "react";
 import { useCallback } from "react";
@@ -50,18 +52,18 @@ const ProjectInfo: React.FC = () => {
                 <div>
                     <div className="flex justify-content-between align-items-center padding-right-15">
                         <h1 className="padding-top-15 padding-left-15">Project</h1>
-                        <div>
-                            <button onClick={() => editingCallback(true)}>
-                                Edit
+                        <div className="btn-group">
+                            <button onClick={() => editingCallback(true)} className="btn btn-outline-light" title="Edit Project">
+                                <FontAwesomeIcon icon={faPencilAlt} />
                             </button>
-                            <button>
-                                Download Package
+                            <button className="btn btn-outline-light" title="Download Package">
+                                <FontAwesomeIcon icon={faDownload} />
                             </button>
-                            <button>
-                                Export Config
+                            <button className="btn btn-outline-light" title="Export Configuration">
+                                <FontAwesomeIcon icon={faFileExport} />
                             </button>
-                            <button onClick={handleClick}>
-                                Update Config
+                            <button onClick={handleClick} className="btn btn-outline-light" title="Update Configuration">
+                                <FontAwesomeIcon icon={faEdit} />
                             </button>
                         </div>
                     </div>

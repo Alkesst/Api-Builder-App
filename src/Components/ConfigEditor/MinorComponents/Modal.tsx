@@ -67,7 +67,7 @@ const Modal: React.FC<ModalProps> = ({ showing, setShowing, entityId, setDeleted
                 >
                     {computeAttributeTypeElements}
                 </select>
-                <button type="button" className="btn btn-outline-danger" onClick={() => deleteAttribute(entityId, row.Identifier)}>
+                <button type="button" className="btn square btn-outline-danger" onClick={() => deleteAttribute(entityId, row.Identifier)}>
                             <FontAwesomeIcon icon={faTrashAlt} />
                 </button>
             </div>
@@ -90,16 +90,16 @@ const Modal: React.FC<ModalProps> = ({ showing, setShowing, entityId, setDeleted
                         </div>
                     </h3>
                     <div className="btn-group">
-                        <button type="button" className="btn btn-outline-danger" onClick={deleteHandler}>
+                        <button type="button" className="btn square btn-outline-danger" onClick={deleteHandler}>
                             <FontAwesomeIcon icon={faTrashAlt} />
                         </button>
-                        <button type="button" className="btn btn-outline-light" onClick={closeHandler}>
+                        <button type="button" className="btn square btn-outline-light" onClick={closeHandler}>
                             <FontAwesomeIcon icon={faTimes} />
                         </button>
                     </div>
                 </div>
                 <div>
-                <button type="button" className="btn btn-outline-light add" onClick={() => addEmptyNewAttribute(entityId)}>
+                <button type="button" className="btn square btn-outline-light add" onClick={() => addEmptyNewAttribute(entityId)}>
                         <FontAwesomeIcon icon={faPlus} />
                         Attribute
                     </button>
@@ -107,7 +107,7 @@ const Modal: React.FC<ModalProps> = ({ showing, setShowing, entityId, setDeleted
                 <div className="rows-container">
                     {computeModalRows}
                 </div>
-                <button onClick={save}>
+                <button onClick={save} className="btn square btn-outline-light">
                     Save
                 </button>
             </div>

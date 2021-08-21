@@ -57,9 +57,17 @@
 
 Button.btn {
   background-color: transparent;
+  font-size: 0.75rem;
+}
+
+button.square {
   height: 35px;
   width: 35px;
-  font-size: 0.75rem;
+}
+
+.Button.square {
+  height: 35px;
+  width: 35px;
 }
 
 .btn.btn-outline-light {
@@ -70,6 +78,7 @@ Button.btn {
   background: rgba(white, 0.75);
   color: black;
 }
+
 
 @mixin inputs {
   border-radius: 3px;

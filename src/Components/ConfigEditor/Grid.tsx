@@ -98,7 +98,7 @@ const Grid : React.FC<IGridProps> = (
             <div className="flex align-items-center padding-top-10 padding-left-10">
                 {projectType}
                 <div className="padding-left-10">
-                    <button type="button"className="btn btn-outline-light" onClick={newEntityCallback}>
+                    <button type="button"className="btn square btn-outline-light" onClick={newEntityCallback}>
                         <FontAwesomeIcon icon={faPlus} />
                     </button>
                 </div>

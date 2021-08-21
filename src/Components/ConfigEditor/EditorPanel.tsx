@@ -46,7 +46,7 @@ const EditorPanel : React.FC<IEditorPanelProps> = ({
 
     return (
         <>
-            <button className={`Grid-Expander Grid-Panel-${buttonStyle} btn btn-outline-light margin-bot-10`} type="button" onClick={expandHandler}>
+            <button className={`Grid-Expander Grid-Panel-${buttonStyle} btn square btn-outline-light margin-bot-10`} type="button" onClick={expandHandler}>
                 <FontAwesomeIcon icon={(expanded) ? faAngleLeft : faAngleRight} />
             </button>
             <div className={`Panel-Color ${(!expanded) ? 'Hidden' : ''}`}>

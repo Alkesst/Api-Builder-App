@@ -75,7 +75,7 @@ const Entity : React.FC<IEntityProps> = (
                         </div>
                         <div className="btn-group">
                             <button
-                                className="btn btn-outline-light"
+                                className="btn square btn-outline-light"
                                 type="button"
                                 onClick={() => onEditHandler(Identifier)}
                             >
@@ -85,7 +85,7 @@ const Entity : React.FC<IEntityProps> = (
                                 onClick={expandHandler}
                                 aria-controls="example-collapse-text"
                                 aria-expanded={expanded}
-                                className="btn btn-outline-light"
+                                className="btn square btn-outline-light"
                             >
                                 <FontAwesomeIcon icon={(!expanded) ? faAngleDown : faAngleUp} />
                             </Button>

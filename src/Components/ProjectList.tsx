@@ -32,7 +32,7 @@ const ProjectList: React.FC<ProjectViewProps> = ({
                         {Type}
                     </h6>
                 </div>
-                <button className="btn btn-outline-light" onClick={() => handleClick(Identifier)}>
+                <button className="btn square btn-outline-light" onClick={() => handleClick(Identifier)}>
                     <FontAwesomeIcon icon={faChevronRight} />
                 </button>
             </div>
