@@ -40,7 +40,7 @@ const EntitySidePanel: React.FC<EntitySidePanelProps> = (
                             Name={attribute.Name}
                             Type={attribute.Type}
                             isPK={isAttributePK(pks, attribute.Identifier)}
-                            IsNullable={attribute.IsNullable}
+                            IsMandatory={attribute.IsMandatory}
                         />
                     ))}
                 </div>
@@ -63,7 +63,7 @@ const EntitySidePanel: React.FC<EntitySidePanelProps> = (
                     </div>
                     <div className="btn-group">
                         <button
-                            className="btn btn-outline-light"
+                            className="btn square btn-outline-light"
                             type="button"
                             onClick={editCallback}
                         >
@@ -73,7 +73,7 @@ const EntitySidePanel: React.FC<EntitySidePanelProps> = (
                             onClick={setExpandedCallback}
                             aria-controls="example-collapse-text"
                             aria-expanded={expanded}
-                            className="btn btn-outline-light"
+                            className="btn square btn-outline-light"
                         >
                             <FontAwesomeIcon icon={(!expanded) ? faAngleDown : faAngleUp} />
                         </Button>

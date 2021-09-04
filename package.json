@@ -23,6 +23,7 @@
     "react-draggable": "^4.4.3",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.4",
+    "react-toastify": "^7.0.4",
     "react-xarrows": "^1.5.2",
     "typescript": "~3.9.7",
     "zustand": "^3.5.2"

@@ -10,6 +10,7 @@ import Collapse from 'react-bootstrap/cjs/Collapse';
 import { useAttributeStore, useEntityStore } from '../../Stores/ConfigEditorStore';
 import Attribute from './Attribute';
 import { isAttributePK } from 'Helper/EntitiesHelper';
+import { IEntity } from '../../../../../api-builder-types';
 
 interface IEntityProps {
     Identifier: string;
@@ -24,13 +25,15 @@ const Entity : React.FC<IEntityProps> = (
 ) => {
     const { getEntity, getEntityPKs } = useEntityStore();
     const { getAttributesByEntityId } = useAttributeStore();
-    const { Name, Coordinates } = useMemo(() => getEntity(Identifier), [Identifier, getEntity])!!;
+    const { Coordinates } = useMemo(() => getEntity(Identifier), [Identifier, getEntity])!!;
     const Attributes = getAttributesByEntityId(Identifier);
     const nodeRef = useRef(null);
     const [expanded, setExpanded] = useState<boolean>(false);
+    const [entity, setEntity] = useState<IEntity>();
 
     useEffect(() => {
-    }, [expanded]);
+        setEntity(getEntity(Identifier));
+    }, [expanded, getEntity, Identifier]);
 
     const expandHandler = () => {
         setExpanded(!expanded);
@@ -49,7 +52,7 @@ const Entity : React.FC<IEntityProps> = (
                         DefaultValue={null}
                         Precision={null}
                         isPK={isAttributePK(pks, item.Identifier)}
-                        IsNullable
+                        IsMandatory={item.IsMandatory}
                     />
                 ))}
             </div>
@@ -68,11 +71,11 @@ const Entity : React.FC<IEntityProps> = (
                 <div ref={nodeRef} id={Identifier} className="padding-10">
                     <div className="flex justify-content-between align-items-center">
                         <div className="header">
-                            {Name}
+                            {entity?.Name}
                         </div>
                         <div className="btn-group">
                             <button
-                                className="btn btn-outline-light"
+                                className="btn square btn-outline-light"
                                 type="button"
                                 onClick={() => onEditHandler(Identifier)}
                             >
@@ -82,7 +85,7 @@ const Entity : React.FC<IEntityProps> = (
                                 onClick={expandHandler}
                                 aria-controls="example-collapse-text"
                                 aria-expanded={expanded}
-                                className="btn btn-outline-light"
+                                className="btn square btn-outline-light"
                             >
                                 <FontAwesomeIcon icon={(!expanded) ? faAngleDown : faAngleUp} />
                             </Button>

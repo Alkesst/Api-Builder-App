@@ -11,9 +11,12 @@
 }
 
 .App-Background {
-  text-align: center;
   height: 100%;
   background-color: #282c34;
+}
+
+.Center-Text {
+  text-align: center;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -28,13 +31,15 @@
 
 .App-header  {
   background-color: #282c34;
+  font-size: calc(10px + 2vmin);
+  color: gainsboro;
+}
+
+.Center-Content { 
   display: flex;
   flex: 1 1 auto;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
 .App-link {
@@ -52,9 +57,17 @@
 
 Button.btn {
   background-color: transparent;
+  font-size: 0.75rem;
+}
+
+button.square {
   height: 35px;
   width: 35px;
-  font-size: 0.75rem;
+}
+
+.Button.square {
+  height: 35px;
+  width: 35px;
 }
 
 .btn.btn-outline-light {
@@ -66,22 +79,32 @@ Button.btn {
   color: black;
 }
 
-input {
+
+@mixin inputs {
   border-radius: 3px;
   background: #282c34;
   color: white;
   border-color: rgba(255, 255, 255, 0.4);
 }
 
+input {
+  @include inputs;
+}
+
 select {
-  border-radius: 3px;
-  background: #282c34;
-  color: white;
-  border-color: rgba(255, 255, 255, 0.4);
+  @include inputs;
+}
+
+textarea {
+  @include inputs;
 }
 
 h3.text-white {
   margin-bottom: 0px;
+}
+
+.text-gainsboro {
+  color: gainsboro !important;
 }
 
 label {
@@ -105,4 +128,12 @@ label {
 
 ::-webkit-scrollbar-thumb:hover {
   background: #555; 
+}
+
+.projects-container-align {
+  text-align: left;
+}
+
+.App-Background-Height-Title {
+  min-height: calc(100vh - 56px - 71px);
 }

@@ -5,7 +5,7 @@ export const createEmptyAttribute = (): IAttribute => (
     {
         Identifier: newGuidString(),
         Name: 'New Attribute',
-        IsNullable: false,
+        IsMandatory: false,
         Type: AttributeType.String,
     }
 )
@@ -27,7 +27,12 @@ export const sliceAttributesArray = (attributes: IAttribute[], attributeId: stri
         (attribute) => attribute.Identifier === attributeId,
     );
     if (attributeToUpdateIndex === -1) return {slice1: [], slice2: [], attributeToUpdateIndex: -1};
-    const slice1 = attributes.slice(0, attributeToUpdateIndex);
-    const slice2 = attributes.slice(attributeToUpdateIndex + 1);
+    const [slice1, slice2] = sliceArray<IAttribute>(attributes, attributeToUpdateIndex)
     return {slice1, slice2, attributeToUpdateIndex};
+}
+
+export const sliceArray = <T>(arrayToSplit: T[], index: number): [T[], T[]] => {
+    const slice1 = arrayToSplit.slice(0, index);
+    const slice2 = arrayToSplit.slice(index + 1);
+    return [slice1, slice2];
 }

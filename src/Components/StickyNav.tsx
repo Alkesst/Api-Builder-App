@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import Navbar from 'react-bootstrap/cjs/Navbar';
 import Nav from 'react-bootstrap/cjs/Nav';
+import { useHistory } from 'react-router-dom';
 
 const StickyNav: React.FC = () => {
     const [userToken, setUserToken] = useState<string | null>();
+    const history = useHistory();
 
     useEffect(() => {
         setUserToken(sessionStorage.getItem('userToken'));
@@ -12,6 +14,7 @@ const StickyNav: React.FC = () => {
     const logOut = () => {
         sessionStorage.removeItem('userToken');
         setUserToken(null);
+        history.push('/');
     };
 
     const generateLogOutButton = () => (
@@ -21,7 +24,6 @@ const StickyNav: React.FC = () => {
     const generateButtonsForLoggedUsers = () => (
         <>
             <Nav.Link href="/projects">Projects</Nav.Link>
-            <Nav.Link href="/configs/editor">Create Configurations</Nav.Link>
         </>
     );
 

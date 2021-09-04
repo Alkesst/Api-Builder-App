@@ -7,14 +7,16 @@ import {
     ConfigurationEditor,
 } from 'Components';
 import ProjectsView from './ProjectManagement';
+import ProjectInfo from './ProjectInfo';
 
 const Routes: React.FC = () => (
     <div>
         <StickyNav />
         <Switch>
             <Route path="/login" component={Login} />
+            <Route path="/project/editor/:id" component={ConfigurationEditor} />
+            <Route path="/project/:id" component={ProjectInfo} />
             <Route path="/projects" component={ProjectsView} />
-            <Route path="/configs/editor" component={ConfigurationEditor} />
             <Route exact path="/" component={App} />
         </Switch>
     </div>
