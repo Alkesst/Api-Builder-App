@@ -1,6 +1,6 @@
 import { faDownload, faEdit, faFileExport, faPencilAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { getProjectInfo, saveProjectInfo } from "Helper/Retriever";
+import { getExportedProject, getProjectInfo, getProjectPackage, saveProjectInfo } from "Helper/Retriever";
 import React, { useState } from "react";
 import { useCallback } from "react";
 import { useEffect } from "react";
@@ -46,7 +46,15 @@ const ProjectInfo: React.FC = () => {
             setEtiding(false);
             toast.error("An error has ocurred while saving the project :(" , {position: "bottom-right"});
         });
-    }
+    };
+
+    const exportConfigCallback = () => {
+        getExportedProject(project?.Identifier!!);
+    };
+
+    const downloadPackage = () => {
+        getProjectPackage(project?.Identifier!!);
+    };
 
     return (
         <div className="App App-Background text-gainsboro projects-container-align">
@@ -58,10 +66,10 @@ const ProjectInfo: React.FC = () => {
                             <button onClick={() => editingCallback(true)} className="btn btn-outline-light" title="Edit Project">
                                 <FontAwesomeIcon icon={faPencilAlt} />
                             </button>
-                            <button className="btn btn-outline-light" title="Download Package">
+                            <button className="btn btn-outline-light" title="Download Package" onClick={downloadPackage}>
                                 <FontAwesomeIcon icon={faDownload} />
                             </button>
-                            <button className="btn btn-outline-light" title="Export Configuration">
+                            <button className="btn btn-outline-light" title="Export Configuration" onClick={exportConfigCallback}>
                                 <FontAwesomeIcon icon={faFileExport} />
                             </button>
                             <button onClick={handleClick} className="btn btn-outline-light" title="Update Configuration">

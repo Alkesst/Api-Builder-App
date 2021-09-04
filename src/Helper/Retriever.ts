@@ -27,6 +27,32 @@ export const saveProjectInfo = async (payload: IProject): Promise<void> => {
     baseRequest(`/project`, config);
 };
 export const getProjectInfo = async (id: string): Promise<IProject> => baseRequest<IProject>(`/project/${id}`);
+export const getExportedProject = async (id: string): Promise<any> => {
+    const result = fetch(`${prefixUrl}/project/${id}/export`);
+    result.then((response: any) => response.blob())
+    .then((blob: Blob) => {
+        const url = window.URL.createObjectURL(blob);
+        const downloadHandlerElement = document.createElement('a');
+        downloadHandlerElement.href = url;
+        downloadHandlerElement.download = 'config.json';
+        document.body.appendChild(downloadHandlerElement);
+        downloadHandlerElement.click();
+        downloadHandlerElement.remove();
+    });
+};
+export const getProjectPackage = async (id: string): Promise<any> => {
+    const result = fetch(`${prefixUrl}/project/${id}/package`);
+    result.then((response: any) => response.blob())
+    .then((blob: Blob) => {
+        const url = window.URL.createObjectURL(blob);
+        const downloadHandlerElement = document.createElement('a');
+        downloadHandlerElement.href = url;
+        downloadHandlerElement.download = 'package.zip';
+        document.body.appendChild(downloadHandlerElement);
+        downloadHandlerElement.click();
+        downloadHandlerElement.remove();
+    });
+};
 
 export const login = async (): Promise<void> => {
     const config: RequestInit = { method: 'POST' };

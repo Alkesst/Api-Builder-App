@@ -1,44 +1,49 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
-import { IProject } from 'api-builder-types';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { IProject, ProjectType } from 'api-builder-types';
 import { retrieveProjects } from 'Helper/Retriever';
 import { ProjectView } from 'Components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { newGuidString } from 'Helper/GuidHelper';
 
 const ProjectsView : React.FC = () => {
     const [projects, setProjects] = useState<IProject[]>();
     const [fetching, setFetching] = useState<boolean>(false);
-    const [filteredProjects, setFilteredProjects] = useState<IProject[]>();
+    const [searching, setSearching] = useState<boolean>(false);
+    const [filterValue, setFilterValue] = useState<string>('');
+    const filteredProjects = useMemo<IProject[] | undefined>(() => {
+        if(filterValue === '' || !filterValue) {
+            return projects;
+        }
+        const filterValueLower = filterValue.toLocaleLowerCase();
+        return projects?.filter((e: IProject) => e.Name.toLowerCase().includes(filterValueLower) || e.Type.toString().toLocaleLowerCase().includes(filterValueLower));
+    }, [filterValue, projects]);
 
     useEffect(() => {
         if (!projects) {
             setFetching(true);
             retrieveProjects().then((result: IProject[]) => {
                 setProjects(result);
-                setFilteredProjects(result);
                 setFetching(false);
             });
         }
     }, [projects]);
 
-
-    const handleFiltering = (event: ChangeEvent<HTMLInputElement>) => {
-        if(event.target.value === '' || !event.target.value) {
-            setFilteredProjects(projects); 
-            return;
-        }
-        const filterValue = event.target.value.toLocaleLowerCase();
-        const a = filteredProjects?.filter((e: IProject) => e.Name.toLowerCase().includes(filterValue) || e.Type.toString().toLocaleLowerCase().includes(filterValue));
-        setFilteredProjects(a);
-    }
+    const addProject = useCallback(() => { 
+        const newProject = {Description: 'New Project', Identifier: newGuidString(), Type: ProjectType.Relational, Name: 'New Project'};
+        setProjects([...(projects!), newProject]);
+    }, [projects]);
 
     return (
         <div className="App App-Background text-gainsboro projects-container-align">
             <div className="flex justify-content-between align-items-center padding-right-15">
                 <h1 className="padding-top-15 padding-left-15">Projects</h1>
                 <div>
-                    <FontAwesomeIcon icon={faSearch} />
-                    <input className="margin-left-15" onChange={(e) => handleFiltering(e)} />
+                    <button className="btn square btn-outline-light" onClick={addProject}>
+                        <FontAwesomeIcon icon={faPlus} />
+                    </button>
+                    <FontAwesomeIcon icon={faSearch} onClick={(e) => setSearching(!searching)} className="margin-left-15" />
+                    {searching && <input value={filterValue} className="margin-left-15" onChange={(e) => setFilterValue(e.target.value)} />}
                 </div>
             </div>
             <div className="App-header App-Background-Height-Title Center-Content padding-top-15">
