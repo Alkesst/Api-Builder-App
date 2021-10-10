@@ -38,7 +38,7 @@ const StickyNav: React.FC = () => {
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Brand href="/">
                     <img
-                        src="/esplota.png"
+                        src="/logo192.png"
                         width="30"
                         height="30"
                         className="d-inline-block align-top"
